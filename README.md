@@ -1,5 +1,11 @@
-# 2022-summer-2-b
+環境構築
 
-main ブランチに PUSH されたら自動で Deno Deploy にデプロイされます。
+node_modulesのインストール
+```bash
+yarn install
+```
 
-https://jigintern-2022-summer-2-b.deno.dev/
+サーバ起動
+```
+yarn dev
+```
