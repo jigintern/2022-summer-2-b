@@ -14,6 +14,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow.src,
 });
 
+L.popup({
+  maxWidth: 300,
+  minWidth: 300,
+}).setLatLng;
+
 const Map = () => {
   return (
     <MapContainer
@@ -27,7 +32,7 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[35.6809591, 139.7673068]}>
-        <Popup pane="">
+        <Popup>
           <Image
             src={"https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png"}
             alt={"gazou"}
