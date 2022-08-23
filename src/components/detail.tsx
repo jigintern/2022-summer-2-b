@@ -12,7 +12,10 @@ const Detail = () => {
         <button type="button">
           <Image src={`reversetriangle.png`} alt="Logo" id="button" />
         </button>
-        <Image src={`test.png`} alt="Logo" />
+        <Image
+          src={`https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png`}
+          alt="image"
+        />
         <button type="button">
           <Image src={`triangle.png`} alt="Logo" id="button" />
         </button>
