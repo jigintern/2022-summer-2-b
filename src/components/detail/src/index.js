@@ -7,11 +7,11 @@ function Picture() {
 }
 
 function Button1() {
-  return <button type="button" id="button"><img src={`reversetriangle.png`} alt="Logo" /></button>;
+  return <button type="button" ><img src={`reversetriangle.png`} alt="Logo" id="button" /></button>;
 }
 
 function Button2() {
-  return <button type="button" id="button"><img src={`triangle.png`} alt="Logo" /></button>;
+  return <button type="button" ><img src={`triangle.png`} alt="Logo" id="button"/></button>;
 }
 
 class Person extends React.Component {

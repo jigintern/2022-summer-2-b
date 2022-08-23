@@ -6,19 +6,25 @@ body {
     width: 20%;
     height: 20%;
   }
-button{
-  top: 3px;
+  button{
+    color: rgb(255, 255, 255);
+  }
+img#button{
+  top: 30px;
 }
  h1{
-  font-size: 16px
+  font-size: 16px;
+  text-align:center;
  } 
  p{
-  font-size: 12px
+  font-size: 12px;
+  text-align:center;
  }
   ol, ul {
     padding-left: 30px;
   }
  .main{
   margin: 20px;
+  text-align:center;
  }
   
