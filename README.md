@@ -1,5 +1,11 @@
-# Minimal Next.js
+環境構築
 
+node_moduleのインストール
 ```bash
-yarn create next-app --example https://github.com/lightsound/min-next
+yarn install
+```
+
+サーバ起動
+```
+yarn dev
 ```
