@@ -1,5 +1,5 @@
-import SearchBar from "src/components/SeachBar";
 import { Button } from "src/components/Button";
+import SearchBar from "src/components/SeachBar";
 
 const Header = () => {
   return (
@@ -31,7 +31,7 @@ const Header = () => {
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ paddingRight: "40px" }}>
-            <SearchBar></SearchBar>
+            <SearchBar />
           </div>
           <Button>投稿</Button>
         </div>
