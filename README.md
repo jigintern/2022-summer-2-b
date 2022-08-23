@@ -1,5 +1,5 @@
-# 2022-summer-2-b
+# Minimal Next.js
 
-main ブランチに PUSH されたら自動で Deno Deploy にデプロイされます。
-
-https://jigintern-2022-summer-2-b.deno.dev/
+```bash
+yarn create next-app --example https://github.com/lightsound/min-next
+```
