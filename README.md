@@ -1,6 +1,6 @@
 環境構築
 
-node_moduleのインストール
+node_modulesのインストール
 ```bash
 yarn install
 ```
