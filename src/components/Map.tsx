@@ -3,6 +3,7 @@ import L from "leaflet";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import Image from "next/image";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 // @ts-ignore
@@ -26,8 +27,13 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[35.6809591, 139.7673068]}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+        <Popup pane="">
+          <Image
+            src={"https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png"}
+            alt={"gazou"}
+            width={1000}
+            height={1000}
+          />
         </Popup>
       </Marker>
     </MapContainer>
