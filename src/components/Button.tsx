@@ -5,7 +5,7 @@ type ButtonHTMLProps = DetailedHTMLProps<
   HTMLButtonElement
 >;
 
-export const Button: React.VFC<ButtonHTMLProps> = ({
+export const Button: React.FC<ButtonHTMLProps> = ({
   children,
   onClick,
   className,
