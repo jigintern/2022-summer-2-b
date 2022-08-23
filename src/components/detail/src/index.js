@@ -47,8 +47,11 @@ class Main extends React.Component {
   render() {
     return (
       <div className="main">
-         <div className="main-picture">
-          <Button1/><Picture/><Button2/>
+        <div className="main-heart">
+          <Heart/>
+        </div>
+        <div className="main-picture">
+          <Button1/> <Picture/> <Button2/>
         </div>
         <div className="main-person">
           <Person />
@@ -56,19 +59,17 @@ class Main extends React.Component {
         <div className="main-comment">
           <Comment/>
         </div>
-        <div className="main-heart">
-          <Heart/>
-        </div>
+        
       </div>
     );
   }
 }  
-  const Kard = () => {
+  const Detail = () => {
     return (
       <Main/>
     );
   }
-  export default Kard;
+  export default Detail;
   
   // ========================================
   
