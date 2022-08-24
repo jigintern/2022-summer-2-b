@@ -45,7 +45,11 @@ export const CardDetail = () => {
           width: "100%",
         }}
       >
-        <button onClick={chanege(i, n)}>
+        <button
+          onClick={() => {
+            chanege(i, n);
+          }}
+        >
           <AiFillCaretLeft
             style={{
               fontSize: "4rem",
@@ -66,7 +70,11 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <button onClick={back(i, n)}>
+        <button
+          onClick={() => {
+            back(i, n);
+          }}
+        >
           <AiFillCaretRight
             style={{
               fontSize: "4rem",
