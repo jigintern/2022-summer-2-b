@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import React from "react";
 import Submission from "src/components/Submission";
 
-export const SubmissionPage: NextPage = () => {
+const SubmissionPage: NextPage = () => {
   return (
     <Submission
       address={""}
@@ -17,3 +17,5 @@ export const SubmissionPage: NextPage = () => {
     />
   );
 };
+
+export default SubmissionPage;
