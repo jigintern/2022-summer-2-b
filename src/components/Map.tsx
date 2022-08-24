@@ -39,7 +39,11 @@ const Map = () => {
           >
             <Popup maxWidth={1000}>
               <div style={{ width: "300px" }}>
-                <Card like={cardDetail.like} imgURL={cardDetail.imgURL} />
+                <Card
+                  id={cardDetail.id}
+                  like={cardDetail.like}
+                  imgURL={cardDetail.imgURL}
+                />
               </div>
             </Popup>
           </Marker>
