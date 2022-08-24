@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Upload from "src/components/Upload";
 
-const Home: NextPage = () => {
-  return <div />;
+const UploadPage: NextPage = () => {
+  return <Upload />;
 };
 
-export default Home;
+export default UploadPage;
