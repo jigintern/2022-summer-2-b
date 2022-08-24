@@ -2,7 +2,29 @@ import Image from "next/image";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 
+function chanege(i: number, n: number) {
+  if (i == n) {
+    return (i = 0);
+  }
+
+  return i + 1;
+}
+function back(i: number, n: number) {
+  if ((i = 0)) {
+    return (i = n);
+  }
+
+  return i - 1;
+}
+
 export const CardDetail = () => {
+  let person = ["女性 10代", "男性 10代"];
+  let place = ["福井県鯖江市新横江２丁目３−４", "東京"];
+  let comment = ["人形供養とかじゃないでめがね供養があった", "いいね"];
+  let img = ["/sabae.png", "/sabae.png"];
+  let i: number = 0;
+  const n: number = 2;
+
   return (
     <div
       style={{
@@ -23,13 +45,20 @@ export const CardDetail = () => {
           width: "100%",
         }}
       >
-        <AiFillCaretLeft
+        <button onClick={chanege(i, n)}>
+          <AiFillCaretLeft
+            style={{
+              fontSize: "4rem",
+            }}
+          />
+        </button>
+        {/*<AiFillCaretLeft
           style={{
             fontSize: "4rem",
           }}
-        />
+        />*/}
         <Image
-          src="/sabae.png"
+          src={img[i]}
           height="440px"
           width="440px"
           alt="sabae"
@@ -37,11 +66,18 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <AiFillCaretRight
+        <button onClick={back(i, n)}>
+          <AiFillCaretRight
+            style={{
+              fontSize: "4rem",
+            }}
+          />
+        </button>
+        {/*<AiFillCaretRight
           style={{
             fontSize: "4rem",
           }}
-        />
+        />*/}
       </div>
       <div
         style={{
@@ -52,8 +88,8 @@ export const CardDetail = () => {
           gap: "5.5rem",
         }}
       >
-        女性 10代 <br />
-        福井県鯖江市新横江２丁目３−４
+        {person[i]} <br />
+        {place[i]}
         <div />
         <div>
           <AiFillHeart />
@@ -73,7 +109,7 @@ export const CardDetail = () => {
           marginRight: "10rem",
         }}
       >
-        人形供養とかじゃないでめがね供養があった
+        {comment[i]}
       </div>
     </div>
   );
