@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { Button } from "./Button";
 // import "./detail.css";
 
 const Detail = () => {
@@ -20,30 +21,30 @@ const Detail = () => {
         </div>
       </div>
       <div className="main-picture">
-        <button type="button">
-          <Image
+        <Button type="button">
+          {/*<Image
             src={`https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png`}
             alt="Logo"
             id="button"
             width={100}
             height={50}
-          />
-        </button>
+          />*/}
+        </Button>
         <Image
           src={`https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png`}
           alt="image"
           width={300}
           height={200}
         />
-        <button type="button">
-          <Image
+        <Button type="button">
+          {/*<Image
             src={`https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png`}
             alt="Logo"
             id="button"
             width={100}
             height={50}
-          />
-        </button>
+          />*/}
+        </Button>
       </div>
       <div className="main-person">
         <div>
