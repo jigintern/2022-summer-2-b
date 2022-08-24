@@ -4,11 +4,14 @@ import { FC, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { isModalState } from "src/globalStates/atoms/IsModalAtom";
+import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 import { CardPopUpProps } from "src/types/cardPopUp";
 
 export const Card: FC<CardPopUpProps> = (props) => {
   const [isModal, setIsModal] = useRecoilState(isModalState);
-  const { like, imgURL } = props;
+  const [selectedCardId, setSelectedCardId] =
+    useRecoilState(selectedCardIdState);
+  const { id, like, imgURL } = props;
 
   return (
     <div
@@ -29,6 +32,7 @@ export const Card: FC<CardPopUpProps> = (props) => {
         }}
         onClick={() => {
           setIsModal(true);
+          setSelectedCardId(id);
         }}
       >
         <Image src={imgURL} alt={"gazou"} width={300} height={200} />
