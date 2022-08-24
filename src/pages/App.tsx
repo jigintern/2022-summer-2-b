@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Page from "./map-page";
 
 function MapPage() {
   const Detail = React.useMemo(
@@ -11,7 +13,15 @@ function MapPage() {
     []
   );
 
-  return <Detail />;
+  return (
+    <div>
+      <Detail />
+      <Router>
+        <Route path="/App" component={Detail} />
+        <Route path="/map-page" component={Page} />
+      </Router>
+    </div>
+  );
 }
 
 export default MapPage;
