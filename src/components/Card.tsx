@@ -29,12 +29,7 @@ export const Card = () => {
           setIsModal(true);
         }}
       >
-        <Image
-          src={"https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png"}
-          alt={"gazou"}
-          width={300}
-          height={200}
-        />
+        <Image src="/sabae.png" alt={"gazou"} width={300} height={200} />
       </button>
       <div
         style={{
