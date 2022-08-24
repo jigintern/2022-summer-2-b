@@ -1,7 +1,13 @@
+import { Modal } from "@mantine/core";
 import Image from "next/image";
+import { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
+import { useRecoilState } from "recoil";
+import { isModalState } from "src/globalStates/atoms/IsModalAtom";
 
 export const Card = () => {
+  const [isModal, setIsModal] = useRecoilState(isModalState);
+
   return (
     <div
       style={{
@@ -18,6 +24,9 @@ export const Card = () => {
           outline: "none",
           padding: "0",
           appearance: "none",
+        }}
+        onClick={() => {
+          setIsModal(true);
         }}
       >
         <Image
