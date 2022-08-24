@@ -1,8 +1,14 @@
 import Image from "next/image";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
+import { useRecoilValue } from "recoil";
+import { cardDetailState } from "src/globalStates/atoms/cardDetailAtom";
+import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
 export const CardDetail = () => {
+  const cardDetails = useRecoilValue(cardDetailState);
+  const selectedCardId = useRecoilValue(selectedCardIdState);
+
   return (
     <div
       style={{
@@ -52,7 +58,10 @@ export const CardDetail = () => {
           gap: "5.5rem",
         }}
       >
-        女性 10代 <br />
+        {`${cardDetails[selectedCardId - 1]?.reviews[0]?.gender} ${
+          cardDetails[selectedCardId - 1]?.reviews[0]?.age
+        }`}
+        <br />
         福井県鯖江市新横江２丁目３−４
         <div />
         <div>
@@ -63,7 +72,7 @@ export const CardDetail = () => {
               marginLeft: "0.3rem",
             }}
           >
-            100
+            {cardDetails[selectedCardId - 1]?.like}
           </div>
         </div>
       </div>
@@ -73,7 +82,7 @@ export const CardDetail = () => {
           marginRight: "10rem",
         }}
       >
-        人形供養とかじゃないでめがね供養があった
+        {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
       </div>
     </div>
   );
