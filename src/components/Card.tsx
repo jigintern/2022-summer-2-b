@@ -1,12 +1,14 @@
 import { Modal } from "@mantine/core";
 import Image from "next/image";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { isModalState } from "src/globalStates/atoms/IsModalAtom";
+import { CardPopUpProps } from "src/types/cardPopUp";
 
-export const Card = () => {
+export const Card: FC<CardPopUpProps> = (props) => {
   const [isModal, setIsModal] = useRecoilState(isModalState);
+  const { like, imgURL } = props;
 
   return (
     <div
@@ -29,7 +31,7 @@ export const Card = () => {
           setIsModal(true);
         }}
       >
-        <Image src="/sabae.png" alt={"gazou"} width={300} height={200} />
+        <Image src={imgURL} alt={"gazou"} width={300} height={200} />
       </button>
       <div
         style={{
@@ -45,7 +47,7 @@ export const Card = () => {
             marginBottom: "3px",
           }}
         >
-          100
+          {like}
         </div>
       </div>
     </div>

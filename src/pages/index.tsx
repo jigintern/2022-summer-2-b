@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import { CardDetail } from "src/components/CardDetail";
 import { isModalState } from "src/globalStates/atoms/IsModalAtom";
+import { cardDetailState } from "src/globalStates/atoms/cardDetailAtom";
+import { CardDetailProps } from "src/types/cardDetail";
 
 const Home: NextPage = () => {
   const [isModal, setIsModal] = useRecoilState(isModalState);
