@@ -1,16 +1,8 @@
-import dynamic from "next/dynamic";
+import { NextPage } from "next";
 import React from "react";
+import Submission from "src/components/Submission";
 
-export const SubmissionPage: React.FC = () => {
-  const Submission = React.useMemo(
-    () =>
-      dynamic(() => import("src/components/Submission"), {
-        loading: () => <p>loading</p>,
-        ssr: false,
-      }),
-    []
-  );
-
+export const SubmissionPage: NextPage = () => {
   return (
     <Submission
       address={""}
