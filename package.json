@@ -16,6 +16,7 @@
     "react-dom": "18.0.0",
     "react-icons": "^4.4.0",
     "react-leaflet": "^4.0.2",
+    "recoil": "^0.7.5",
     "react-loader-spinner": "^5.2.0"
   },
   "devDependencies": {

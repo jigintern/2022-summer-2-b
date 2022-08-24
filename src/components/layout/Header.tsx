@@ -7,9 +7,6 @@ const Header = () => {
       style={{
         width: "100%",
         height: "120px",
-        position: "fixed",
-        top: "0",
-        left: "0",
       }}
     >
       <div
