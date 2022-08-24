@@ -1,3 +1,6 @@
+// 参考記事
+//https://memo.appri.me/programming/gsi-geocoding-api#%E3%82%B8%E3%82%AA%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0API
+
 import axios from "axios";
 
 export const geocodingAPI = async (adress: string) => {
