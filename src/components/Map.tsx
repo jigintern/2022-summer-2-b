@@ -1,10 +1,11 @@
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { DivOverlay } from "leaflet";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import Image from "next/image";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { Card } from "src/components/Card";
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,11 +14,6 @@ L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x.src,
   shadowUrl: markerShadow.src,
 });
-
-L.popup({
-  maxWidth: 300,
-  minWidth: 300,
-}).setLatLng;
 
 const Map = () => {
   return (
@@ -32,13 +28,10 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[35.6809591, 139.7673068]}>
-        <Popup>
-          <Image
-            src={"https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png"}
-            alt={"gazou"}
-            width={1000}
-            height={1000}
-          />
+        <Popup maxWidth={1000}>
+          <div style={{ width: "300px" }}>
+            <Card />
+          </div>
         </Popup>
       </Marker>
     </MapContainer>

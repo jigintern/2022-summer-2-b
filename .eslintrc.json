@@ -34,7 +34,7 @@
     //分割代入を優先
     "prefer-destructuring": ["error", { "array": false, "object": true }],
     //不要なimportを警告
-    "unused-imports/no-unused-imports": "warn",
+    // "unused-imports/no-unused-imports": "warn",
     //template文字列を優先
     "prefer-template": "error"
   }
