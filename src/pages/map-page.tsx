@@ -2,6 +2,7 @@ import { Modal } from "@mantine/core";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
+import { CardDetail } from "src/components/CardDetail";
 import { isModalState } from "src/globalStates/atoms/IsModalAtom";
 
 function MapPage() {
@@ -25,12 +26,9 @@ function MapPage() {
         zIndex={8000}
         centered
         overlayOpacity={0.1}
+        size={600}
       >
-        <div
-          style={{
-            height: "50vh",
-          }}
-        />
+        <CardDetail />
       </Modal>
     </div>
   );
