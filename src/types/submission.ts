@@ -1,5 +1,7 @@
-import { CardDetailProps } from "src/types/cardDetail";
+import { CardProps } from "src/types/card";
 
 export type SubmissionProps = {
-  address: string;
-} & CardDetailProps;
+  comment: string;
+  gender: "男性" | "女性" | "その他";
+  age: "10代" | "20代" | "30代" | "40代" | "50代" | "60代" | "70代以上";
+} & CardProps;
