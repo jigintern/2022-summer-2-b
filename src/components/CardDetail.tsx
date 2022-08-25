@@ -16,8 +16,16 @@ export const CardDetail = () => {
   const router = useRouter();
   let reviewspage = 0;
 
-  function buttoncount() {
-    return reviewspage + 1;
+  function buttoncount(reviewspage: number, i: number) {
+    if (i == 1) {
+      reviewspage--;
+      console.log(reviewspage);
+    } else if (i == 2) {
+      reviewspage++;
+      console.log(reviewspage);
+    }
+
+    return reviewspage;
   }
 
   const [posts, setPosts] = useState([]);
@@ -49,7 +57,11 @@ export const CardDetail = () => {
           width: "100%",
         }}
       >
-        <button onClick={buttoncount}>
+        <button
+          onClick={() => {
+            reviewspage = buttoncount(reviewspage, 1);
+          }}
+        >
           <AiFillCaretLeft
             style={{
               fontSize: "4rem",
@@ -66,7 +78,11 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <button onClick={buttoncount}>
+        <button
+          onClick={() => {
+            reviewspage = buttoncount(reviewspage, 2);
+          }}
+        >
           <AiFillCaretRight
             style={{
               fontSize: "4rem",
