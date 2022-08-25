@@ -101,17 +101,11 @@ const Submission: React.FC<SubmissionProps> = () => {
                 setComment(e.target.value);
               }}
             />
-            <Select
+            <TextInput
               placeholder="住所を入力"
-              searchable
-              nothingFound="No options"
               radius="md"
-              style={{
-                padding: "40px 0 0 0",
-              }}
-              data={[""]}
               onChange={(e) => {
-                setAddress(e ?? "");
+                setAddress(e.target.value);
               }}
             />
             <Select
