@@ -1,4 +1,4 @@
-import { Text, Image, SimpleGrid } from "@mantine/core";
+import { Text, Image, SimpleGrid, BackgroundImage } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import React, { useState, useCallback, useContext } from "react";
 
@@ -24,6 +24,7 @@ const Upload: React.FC = () => {
         key={index}
         src={imageUrl}
         imageProps={{ onLoad: () => URL.revokeObjectURL(imageUrl) }}
+        style={{ objectFit: "cover" }}
       />
     );
   });
@@ -106,18 +107,32 @@ const Upload: React.FC = () => {
 
   return (
     <div>
-      <div>
-        <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
-          <Text align="center">Drop images here</Text>
-        </Dropzone>
-
-        <SimpleGrid
-          cols={4}
-          breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-          mt={previews.length > 0 ? "xl" : 0}
-        >
-          {previews}
-        </SimpleGrid>
+      <div style={{ width: "560px", height: "560px" }}>
+        {previews.length > 0 ? (
+          <Dropzone
+            accept={IMAGE_MIME_TYPE}
+            onDrop={setFiles}
+            style={{
+              border: "none",
+            }}
+          >
+            <SimpleGrid
+            // cols={4}
+            // breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+            // mt="xl"
+            >
+              {previews}
+            </SimpleGrid>
+          </Dropzone>
+        ) : (
+          <Dropzone
+            accept={IMAGE_MIME_TYPE}
+            onDrop={setFiles}
+            style={{ width: "560px", height: "560px" }}
+          >
+            <Text align="center">Drop images here</Text>
+          </Dropzone>
+        )}
       </div>
       <button
         type="submit"
