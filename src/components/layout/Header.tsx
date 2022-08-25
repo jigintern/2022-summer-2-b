@@ -26,6 +26,9 @@ const Header = () => {
             color: "1E1E1E",
             display: "inline-flex",
           }}
+          onClick={() => {
+            router.push("/");
+          }}
         >
           Insto Atlas
         </h1>
