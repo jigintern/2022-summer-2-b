@@ -121,7 +121,6 @@ const Submission: React.FC<SubmissionProps> = () => {
               nothingFound="Nothing found"
               radius="md"
               searchable
-              creatable
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => {
                 const item = { value: query, label: query };
@@ -152,7 +151,6 @@ const Submission: React.FC<SubmissionProps> = () => {
                 nothingFound="Nothing found"
                 radius="md"
                 searchable
-                creatable
                 getCreateLabel={(query) => `+ Create ${query}`}
                 onCreate={(query) => {
                   const item = { value: query, label: query };
