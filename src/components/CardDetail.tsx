@@ -38,7 +38,7 @@ export const CardDetail = () => {
           }}
         />
         <Image
-          src="/sabae.png"
+          src={cardDetails[selectedCardId - 1]?.reviews[0]?.imgURL}
           height="440px"
           width="440px"
           alt="sabae"

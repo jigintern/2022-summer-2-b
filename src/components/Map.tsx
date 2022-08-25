@@ -42,7 +42,7 @@ const Map = () => {
                 <Card
                   id={cardDetail.id}
                   like={cardDetail.like}
-                  imgURL={cardDetail.imgURL}
+                  imgURL={cardDetail.reviews?.[0].imgURL}
                 />
               </div>
             </Popup>
