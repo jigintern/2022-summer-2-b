@@ -37,6 +37,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [img, setImg] = useState("");
 
   return (
     <div

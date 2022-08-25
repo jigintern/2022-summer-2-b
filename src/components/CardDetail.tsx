@@ -1,9 +1,12 @@
+import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
-import { useRecoilValue } from "recoil";
+import { Snapshot, useRecoilValue } from "recoil";
 import { Button } from "src/components/Button";
+import db from "src/firebase/firebase";
 import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
@@ -11,6 +14,15 @@ export const CardDetail = () => {
   const cardDetails = useRecoilValue(cardDetailsState);
   const selectedCardId = useRecoilValue(selectedCardIdState);
   const router = useRouter();
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const postData = collection(db, "post");
+    getDocs(postData).then((snapShot) => {
+      //setPosts(snapShot.docs.map((doc) => ({ ...doc.data() })));
+    });
+  }, []);
 
   return (
     <div
