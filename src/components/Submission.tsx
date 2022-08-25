@@ -5,9 +5,11 @@ import { useState } from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
+import Upload from "src/components/Upload";
+import { handleUpload } from "src/components/Upload";
 import { SubmissionProps } from "src/types/submission";
 
-const Submission: React.FC<SubmissionProps> = (props) => {
+const Submission: React.FC<SubmissionProps> = () => {
   const [genderData, setGenderData] = useState([
     { value: "male", label: "男性" },
     { value: "female", label: "女性" },
@@ -22,7 +24,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
     { value: "60", label: "60代" },
     { value: "70", label: "70代以上" },
   ]);
-
+  const [files, setFiles] = useState<File[]>([]);
   const [comment, setComment] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
@@ -32,7 +34,8 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
   const submit = () => {
     if (comment != "" && address != "" && gender != "" && age != "") {
-      console.log(comment, address, gender, age);
+      console.log(files, comment, address, gender, age);
+      handleUpload(files);
       router.push("/");
       alert("投稿完了");
     } else {
@@ -70,7 +73,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           }}
         >
           {/* {!imgURL && <Loader type="Oval" color="ABABAB" height={30} width={30} />} */}
-          {props.imgURL && (
+          {/* {props.imgURL && (
             <Image
               src={props.imgURL}
               alt=""
@@ -79,7 +82,8 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               objectFit="contain"
               style={{ borderRadius: "16px" }}
             />
-          )}
+          )} */}
+          <Upload files={files} setFiles={setFiles} />
           <div
             style={{
               width: "520px",
