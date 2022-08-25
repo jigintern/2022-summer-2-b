@@ -1,20 +1,19 @@
-import firebase from "firebase/app";
-import "firebase/storage";
+import { initializeApp } from "firebase/app";
+//import "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  //config
-  apikey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECTT_ID,
-  storageBucket: "maping-1193a.appspot.com",
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+  apiKey: "AIzaSyD061G4BWC600llRvl6D9zL6xKTk8rLxFc",
+  authDomain: "jig-jp-teamb.firebaseapp.com",
+  projectId: "jig-jp-teamb",
+  storageBucket: "jig-jp-teamb.appspot.com",
+  messagingSenderId: "604918463020",
+  appId: "1:604918463020:web:3ce84ca7d18d0b8c8d2f89",
+  measurementId: "G-J6KYKX212J",
 };
 
 //Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-export const storage = firebase.storage();
-export const db = getFirestore(firebase);
+const app = initializeApp(firebaseConfig);
+//export const storage = firebase.storage();
+export const db = getFirestore(app);
 export default db;
