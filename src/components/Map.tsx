@@ -31,7 +31,7 @@ const Map = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {cardDetails.map((cardDetail) => {
+      {cardDetails?.map((cardDetail) => {
         return (
           <Marker
             position={[cardDetail.latitude, cardDetail.longitude]}

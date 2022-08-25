@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const [cardDetails, setCardDetails] = useRecoilState(cardDetailsState);
 
   useEffect(() => {
-    const docRef = db.collection("cards").doc("cards");
+    const docRef = db.collection("cards").doc("test_cards");
 
     docRef
       .get()

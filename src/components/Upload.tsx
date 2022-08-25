@@ -18,77 +18,19 @@ export type firebaseOnLoadProp = {
   // このほかにもmetadata,task,refがある
 };
 
-export const handleUpload = (accepterdImg: any) => {
+export const handleUpload = async (accepterdImg: any) => {
   //ボタンを押すと発火
   try {
     // アップロード処理
-    const uploadTask: any = storage
+    const uploadTask = storage
       .ref(`/images/${accepterdImg[0].name}`)
       .put(accepterdImg[0]);
+    //async awaitで非同期処理を行う
+    const ImgURL: Promise<string> =
+      await uploadTask.snapshot.ref.getDownloadURL();
+    // アップロード化完了したら、画像のURLを返す
 
-    uploadTask.on(
-      firebase.storage.TaskEvent.STATE_CHANGED, //タスクイベントの状態が変化した時
-      function (snapshot: firebaseOnLoadProp) {
-        //何％アップロードされているか表示する
-        const progress: number =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log("Upload is paused");
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log("Upload is running");
-            break;
-        }
-      },
-      function (error: any) {
-        //エラーの種類を調べ、表示する
-        // 失敗した時
-        switch (error.code) {
-          case "storage/unauthorized":
-            // User doesn't have permission to access the object
-            console.error("許可がありません");
-            break;
-
-          case "storage/canceled":
-            console.error("アップロードがキャンセルされました　");
-            // User canceled the upload
-            break;
-
-          case "storage/unknown":
-            console.error("予期せぬエラーが発生しました");
-            // Unknown error occurred, inspect error.serverResponse
-            break;
-        }
-      },
-      function () {
-        //挙げられた画像のURL取得
-        // 成功した時
-        try {
-          uploadTask.snapshot.ref
-            .getDownloadURL()
-            .then(function (downloadURL: string) {
-              console.log(`ダウンロードしたURL${downloadURL}`);
-            });
-        } catch (error) {
-          //switch (error.code) {
-          //  case "storage/object-not-found":
-          //    console.log("ファイルが存在しませんでした");
-          //     break;
-          //   case "storage/unauthorized":
-          //     console.log("許可がありません");
-          //     break;
-          //   case "storage/canceled":
-          //     console.log("キャンセルされました");
-          //     break;
-          //   case "storage/unknown":
-          //     console.log("予期せぬエラーが生じました");
-          //     break;
-          // }
-        }
-      }
-    );
+    return ImgURL;
   } catch (error) {
     console.log("エラーキャッチ", error);
   }
@@ -104,6 +46,7 @@ const Upload: React.FC<{
 
   const previews = props.files.map((file, index) => {
     const imageUrl = URL.createObjectURL(file);
+    console.log("imageUrl", imageUrl);
 
     return (
       <Image
@@ -120,7 +63,9 @@ const Upload: React.FC<{
       {previews.length > 0 ? (
         <Dropzone
           accept={IMAGE_MIME_TYPE}
-          onDrop={props.setFiles}
+          onDrop={() => {
+            props.setFiles;
+          }}
           style={{
             border: "none",
           }}

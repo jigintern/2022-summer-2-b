@@ -1,4 +1,5 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import Upload from "src/components/Upload";
 import { handleUpload } from "src/components/Upload";
+import { db } from "src/firebase/firebase";
 import { SubmissionProps } from "src/types/submission";
 
 const Submission: React.FC<SubmissionProps> = () => {
@@ -32,15 +34,77 @@ const Submission: React.FC<SubmissionProps> = () => {
 
   const router = useRouter();
 
-  const submit = () => {
-    if (comment != "" && address != "" && gender != "" && age != "") {
-      console.log(files, comment, address, gender, age);
-      handleUpload(files);
-      router.push("/");
-      alert("投稿完了");
-    } else {
-      alert("入力漏れがあります");
-    }
+  const submit = async () => {
+    const imgURL = await handleUpload(files);
+    const cards = await db.collection("cards").doc("test_cards");
+
+    cards
+      .set({
+        cards: [
+          {
+            id: 1,
+            latitude: 35.94349566577982,
+            longitude: 136.1886840250416,
+            likes: 200,
+            address: "鯖江市鯖江町1-1-1",
+            reviews: [
+              {
+                id: 1,
+                age: age,
+                comment: comment,
+                gender: gender,
+                imgURL: imgURL,
+              },
+            ],
+          },
+        ],
+      })
+      .then(() => {
+        console.log("Document successfully written!");
+        router.push("/");
+        alert("投稿完了");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+
+    // if (comment != "" && address != "" && gender != "" && age != "") {
+    //   console.log(files, comment, address, gender, age);
+    //   const imgURL = await handleUpload(files);
+    //   const cards = await db.collection("cards").doc("test_cards");
+
+    //   cards
+    //     .set({
+    //       cards: [
+    //         {
+    //           id: 1,
+    //           latitude: 35.94349566577982,
+    //           longitude: 136.1886840250416,
+    //           likes: 200,
+    //           address: "鯖江市鯖江町1-1-1",
+    //           reviews: [
+    //             {
+    //               id: 1,
+    //               age: age,
+    //               comment: comment,
+    //               gender: gender,
+    //               imgURL: imgURL,
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     })
+    //     .then(() => {
+    //       console.log("Document successfully written!");
+    //       router.push("/");
+    //       alert("投稿完了");
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error writing document: ", error);
+    //     });
+    // } else {
+    //   alert("入力漏れがあります");
+    // }
   };
 
   return (
