@@ -1,7 +1,10 @@
+import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import SearchBar from "src/components/SeachBar";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <header
       style={{
@@ -23,6 +26,10 @@ const Header = () => {
             color: "1E1E1E",
             display: "inline-flex",
             fontFamily: "Orbitron",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            router.push("/");
           }}
         >
           Insto Atlas
@@ -31,7 +38,13 @@ const Header = () => {
           <div style={{ paddingRight: "40px" }}>
             <SearchBar />
           </div>
-          <Button>投稿</Button>
+          <Button
+            onClick={() => {
+              router.push("/submission");
+            }}
+          >
+            新規投稿
+          </Button>
         </div>
       </div>
     </header>
