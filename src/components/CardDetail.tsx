@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
@@ -9,6 +10,7 @@ import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState"
 export const CardDetail = () => {
   const cardDetails = useRecoilValue(cardDetailsState);
   const selectedCardId = useRecoilValue(selectedCardIdState);
+  const router = useRouter();
 
   return (
     <div
@@ -85,7 +87,13 @@ export const CardDetail = () => {
       >
         {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
       </div>
-      <Button>投稿を追加</Button>
+      <Button
+        onClick={() => {
+          router.push("/submission");
+        }}
+      >
+        投稿を追加
+      </Button>
     </div>
   );
 };
