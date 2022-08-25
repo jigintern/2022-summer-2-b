@@ -9,12 +9,12 @@ const Header = () => {
     <header
       style={{
         width: "100%",
-        height: "120px",
+        height: "105px",
       }}
     >
       <div
         style={{
-          padding: "0 120px",
+          padding: "0px 120px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -25,6 +25,7 @@ const Header = () => {
             fontSize: "40px",
             color: "1E1E1E",
             display: "inline-flex",
+            fontFamily: "Orbitron",
             cursor: "pointer",
           }}
           onClick={() => {

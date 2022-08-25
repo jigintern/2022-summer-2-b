@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useContext } from "react";
 
 import { useDropzone } from "react-dropzone";
-import firebase, { storage } from "../firebase/firebase";
+import firebase, { storage } from "src/firebase/firebase";
 
 export type firebaseOnLoadProp = {
   bytesTransferred: number; //転送済みのバイト数の合計
