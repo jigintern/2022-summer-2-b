@@ -14,21 +14,9 @@ export const CardDetail = () => {
   const cardDetails = useRecoilValue(cardDetailsState);
   const selectedCardId = useRecoilValue(selectedCardIdState);
   const router = useRouter();
-  let reviewspage = 0;
-
-  function buttoncount(reviewspage: number, i: number) {
-    if (i == 1) {
-      reviewspage--;
-      console.log(reviewspage);
-    } else if (i == 2) {
-      reviewspage++;
-      console.log(reviewspage);
-    }
-
-    return reviewspage;
-  }
 
   const [posts, setPosts] = useState([]);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const postData = collection(db, "card");
@@ -59,7 +47,10 @@ export const CardDetail = () => {
       >
         <button
           onClick={() => {
-            reviewspage = buttoncount(reviewspage, 1);
+            if (count == 0) {
+              setCount(count);
+            }
+            setCount(count - 1);
           }}
         >
           <AiFillCaretLeft
@@ -80,7 +71,14 @@ export const CardDetail = () => {
         />
         <button
           onClick={() => {
-            reviewspage = buttoncount(reviewspage, 2);
+            if (
+              count ==
+              cardDetails[selectedCardId - 1]?.reviews[count]?.id -
+                cardDetails[selectedCardId - 1]?.reviews[0]?.id
+            ) {
+              setCount(count);
+            }
+            setCount(count + 1);
           }}
         >
           <AiFillCaretRight
@@ -99,8 +97,8 @@ export const CardDetail = () => {
           gap: "5.5rem",
         }}
       >
-        {`${cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.gender} ${
-          cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.age
+        {`${cardDetails[selectedCardId - 1]?.reviews[count]?.gender} ${
+          cardDetails[selectedCardId - 1]?.reviews[count]?.age
         }`}
         <br />
         {cardDetails[selectedCardId - 1]?.address}
@@ -123,7 +121,7 @@ export const CardDetail = () => {
           marginRight: "10rem",
         }}
       >
-        {cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.comment}
+        {cardDetails[selectedCardId - 1]?.reviews[count]?.comment}
       </div>
       <Button
         onClick={() => {
