@@ -1,9 +1,21 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
+import { collection, addDoc } from "firebase/firestore";
 import Image from "next/image";
 import { useState } from "react";
 // import Loader from "react-loader-spinner";
 import { Button } from "src/components/Button";
+import db from "src/firebase/firebase";
+import storage from "src/firebase/firebase";
 import { SubmissionProps } from "src/types/submission";
+
+function Adddoc(comment: string, address: string, gender: string, age: string) {
+  const docref = addDoc(collection(db, "post"), {
+    comment: { comment },
+    address: { address },
+    gender: { gender },
+    age: { age },
+  });
+}
 
 const Submission: React.FC<SubmissionProps> = (props) => {
   const [genderData, setGenderData] = useState([
@@ -119,8 +131,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           </div>
           <Button
             onClick={() => {
-              console.log(comment, address, gender, age);
-              alert("投稿完了");
+              Adddoc(comment, address, gender, age);
             }}
           >
             投稿
