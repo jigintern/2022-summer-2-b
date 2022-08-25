@@ -1,17 +1,20 @@
+import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import SearchBar from "src/components/SeachBar";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <header
       style={{
         width: "100%",
-        height: "120px",
+        height: "105px",
       }}
     >
       <div
         style={{
-          padding: "0 120px",
+          padding: "0px 120px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -22,6 +25,11 @@ const Header = () => {
             fontSize: "40px",
             color: "1E1E1E",
             display: "inline-flex",
+            fontFamily: "Orbitron",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            router.push("/");
           }}
         >
           Insto Atlas
@@ -30,7 +38,13 @@ const Header = () => {
           <div style={{ paddingRight: "40px" }}>
             <SearchBar />
           </div>
-          <Button>新規投稿</Button>
+          <Button
+            onClick={() => {
+              router.push("/submission");
+            }}
+          >
+            新規投稿
+          </Button>
         </div>
       </div>
     </header>
