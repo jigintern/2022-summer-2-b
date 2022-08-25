@@ -120,7 +120,6 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               }}
               style={{
                 width: "200px",
-                // marginTop: "32px"
               }}
             />
             <div
@@ -152,7 +151,6 @@ const Submission: React.FC<SubmissionProps> = (props) => {
                 }}
                 style={{
                   width: "200px",
-                  // marginTop: "32px"
                 }}
               />
               <Button
