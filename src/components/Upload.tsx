@@ -116,41 +116,40 @@ const Upload: React.FC<{
   });
 
   return (
-    <div>
-      <div style={{ width: "480px", height: "480px" }}>
-        {previews.length > 0 ? (
-          <Dropzone
-            accept={IMAGE_MIME_TYPE}
-            onDrop={props.setFiles}
-            style={{
-              border: "none",
-            }}
+    <div style={{ width: "480px", height: "480px" }}>
+      {previews.length > 0 ? (
+        <Dropzone
+          accept={IMAGE_MIME_TYPE}
+          onDrop={props.setFiles}
+          style={{
+            border: "none",
+          }}
+        >
+          <SimpleGrid
+          // cols={4}
+          // breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+          // mt="xl"
           >
-            <SimpleGrid
-            // cols={4}
-            // breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-            // mt="xl"
-            >
-              {previews}
-            </SimpleGrid>
-          </Dropzone>
-        ) : (
-          <Dropzone
-            accept={IMAGE_MIME_TYPE}
-            onDrop={props.setFiles}
-            style={{ width: "480px", height: "480px" }}
-          >
-            <Text align="center">Drop images here</Text>
-          </Dropzone>
-        )}
-      </div>
-      <button
-        type="submit"
-        className="px-4 py-2 my-4 bg-gray-200 rounded-md"
-        onClick={() => handleUpload(props.files)}
-      >
-        UPLOAD
-      </button>
+            {previews}
+          </SimpleGrid>
+        </Dropzone>
+      ) : (
+        <Dropzone
+          accept={IMAGE_MIME_TYPE}
+          onDrop={props.setFiles}
+          style={{
+            width: "480px",
+            height: "480px",
+            display: "flex",
+            alignItems: "center",
+            color: "#ABABAB",
+          }}
+        >
+          <Text align="center">
+            ここに画像をドラッグするか、 クリックしてファイルを選択
+          </Text>
+        </Dropzone>
+      )}
     </div>
   );
 };
