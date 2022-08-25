@@ -24,7 +24,7 @@ const Header = () => {
             display: "inline-flex",
           }}
         >
-          タイトル
+          Insto Atlas
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ paddingRight: "40px" }}>
