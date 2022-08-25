@@ -7,9 +7,11 @@ import { ChangeEvent, useState } from "react";
 import { Button } from "src/components/Button";
 import storage from "src/firebase/firebase";
 import db from "src/firebase/firebasedb";
+import { geocodingAPI } from "src/lib/geocodingAPI";
 import { SubmissionProps } from "src/types/submission";
 
 function Adddoc(comment: string, address: string, gender: string, age: string) {
+  geocodingAPI(address);
   addDoc(collection(db, "post"), {
     comment: { comment },
     address: { address },
