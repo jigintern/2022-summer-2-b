@@ -5,9 +5,11 @@ import { useState } from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
+import Upload from "src/components/Upload";
+import { handleUpload } from "src/components/Upload";
 import { SubmissionProps } from "src/types/submission";
 
-const Submission: React.FC<SubmissionProps> = (props) => {
+const Submission: React.FC<SubmissionProps> = () => {
   const [genderData, setGenderData] = useState([
     { value: "male", label: "男性" },
     { value: "female", label: "女性" },
@@ -22,13 +24,24 @@ const Submission: React.FC<SubmissionProps> = (props) => {
     { value: "60", label: "60代" },
     { value: "70", label: "70代以上" },
   ]);
-
+  const [files, setFiles] = useState<File[]>([]);
   const [comment, setComment] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
   const router = useRouter();
+
+  const submit = () => {
+    if (comment != "" && address != "" && gender != "" && age != "") {
+      console.log(files, comment, address, gender, age);
+      handleUpload(files);
+      router.push("/");
+      alert("投稿完了");
+    } else {
+      alert("入力漏れがあります");
+    }
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -60,7 +73,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           }}
         >
           {/* {!imgURL && <Loader type="Oval" color="ABABAB" height={30} width={30} />} */}
-          {props.imgURL && (
+          {/* {props.imgURL && (
             <Image
               src={props.imgURL}
               alt=""
@@ -69,7 +82,8 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               objectFit="contain"
               style={{ borderRadius: "16px" }}
             />
-          )}
+          )} */}
+          <Upload files={files} setFiles={setFiles} />
           <div
             style={{
               width: "520px",
@@ -87,20 +101,21 @@ const Submission: React.FC<SubmissionProps> = (props) => {
                 setComment(e.target.value);
               }}
             />
-            <TextInput
+            <Select
               placeholder="住所を入力"
+              searchable
+              nothingFound="No options"
               radius="md"
-              style={
-                {
-                  // padding: "40px 0 0 0",
-                }
-              }
+              style={{
+                padding: "40px 0 0 0",
+              }}
+              data={[""]}
               onChange={(e) => {
-                setAddress(e.target.value);
+                setAddress(e ?? "");
               }}
             />
             <Select
-              label="年齢"
+              label="性別"
               data={genderData}
               placeholder="選択してください"
               nothingFound="Nothing found"
@@ -119,7 +134,6 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               }}
               style={{
                 width: "200px",
-                // marginTop: "32px"
               }}
             />
             <div
@@ -132,7 +146,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               }}
             >
               <Select
-                label="性別"
+                label="年齢"
                 data={ageData}
                 placeholder="選択してください"
                 nothingFound="Nothing found"
@@ -151,17 +165,9 @@ const Submission: React.FC<SubmissionProps> = (props) => {
                 }}
                 style={{
                   width: "200px",
-                  // marginTop: "32px"
                 }}
               />
-              <Button
-                onClick={() => {
-                  console.log(comment, address, gender, age);
-                  alert("投稿完了");
-                }}
-              >
-                投稿
-              </Button>
+              <Button onClick={submit}>投稿</Button>
             </div>
           </div>
         </div>
