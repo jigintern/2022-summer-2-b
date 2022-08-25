@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 export const selectedCardIdState = atom<number>({
-  key: "isModal",
+  key: "selectedCardId",
   default: undefined,
   dangerouslyAllowMutability: true,
 });
