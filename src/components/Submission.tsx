@@ -1,7 +1,9 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 // import Loader from "react-loader-spinner";
+import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { SubmissionProps } from "src/types/submission";
 
@@ -26,56 +28,77 @@ const Submission: React.FC<SubmissionProps> = (props) => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
+  const router = useRouter();
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-evenly",
-        alignItems: "stretch",
-        padding: "0 120px",
-      }}
-    >
-      {/* {!imgURL && <Loader type="Oval" color="ABABAB" height={30} width={30} />} */}
-      {props.imgURL && (
-        <Image
-          src={props.imgURL}
-          alt=""
-          width={600}
-          height={600}
-          objectFit="contain"
-          style={{ borderRadius: "16px" }}
-        />
-      )}
-      <div style={{ width: "520px" }}>
-        <Textarea
-          placeholder="コメントを入力"
-          radius="md"
-          minRows={14}
-          maxRows={14}
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-        />
-        <TextInput
-          placeholder="住所を入力"
-          radius="md"
-          style={{
-            padding: "40px 0 0 0",
-          }}
-          onChange={(e) => {
-            setAddress(e.target.value);
-          }}
-        />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "72vw" }}>
         <div
           style={{
-            display: " flex",
-            flexDirection: "row",
-            alignItems: "flex-end",
+            display: "flex",
+            alignItems: "center",
             justifyContent: "space-between",
-            width: "100%",
+            padding: "16px 0",
           }}
         >
-          <div>
+          <AiOutlineLeft
+            style={{
+              fontSize: "1rem",
+            }}
+            onClick={() => {
+              router.push("/");
+            }}
+          />
+          <p style={{ color: "#767676" }}>投稿作成</p>
+          <p style={{ fontSize: "1rem" }}>　</p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "stretch",
+          }}
+        >
+          {/* {!imgURL && <Loader type="Oval" color="ABABAB" height={30} width={30} />} */}
+          {props.imgURL && (
+            <Image
+              src={props.imgURL}
+              alt=""
+              width={480}
+              height={480}
+              objectFit="contain"
+              style={{ borderRadius: "16px" }}
+            />
+          )}
+          <div
+            style={{
+              width: "520px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Textarea
+              placeholder="コメントを入力"
+              radius="md"
+              minRows={10}
+              maxRows={10}
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            />
+            <TextInput
+              placeholder="住所を入力"
+              radius="md"
+              style={
+                {
+                  // padding: "40px 0 0 0",
+                }
+              }
+              onChange={(e) => {
+                setAddress(e.target.value);
+              }}
+            />
             <Select
               label="年齢"
               data={genderData}
@@ -94,37 +117,53 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               onChange={(e) => {
                 setGender(e ?? "");
               }}
-              style={{ width: "200px", marginTop: "32px" }}
+              style={{
+                width: "200px",
+                // marginTop: "32px"
+              }}
             />
-            <Select
-              label="性別"
-              data={ageData}
-              placeholder="選択してください"
-              nothingFound="Nothing found"
-              radius="md"
-              searchable
-              creatable
-              getCreateLabel={(query) => `+ Create ${query}`}
-              onCreate={(query) => {
-                const item = { value: query, label: query };
-                setAgeData((current: any) => [...current, item]);
+            <div
+              style={{
+                display: " flex",
+                flexDirection: "row",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Select
+                label="性別"
+                data={ageData}
+                placeholder="選択してください"
+                nothingFound="Nothing found"
+                radius="md"
+                searchable
+                creatable
+                getCreateLabel={(query) => `+ Create ${query}`}
+                onCreate={(query) => {
+                  const item = { value: query, label: query };
+                  setAgeData((current: any) => [...current, item]);
 
-                return item;
-              }}
-              onChange={(e) => {
-                setAge(e ?? "");
-              }}
-              style={{ width: "200px", marginTop: "32px" }}
-            />
+                  return item;
+                }}
+                onChange={(e) => {
+                  setAge(e ?? "");
+                }}
+                style={{
+                  width: "200px",
+                  // marginTop: "32px"
+                }}
+              />
+              <Button
+                onClick={() => {
+                  console.log(comment, address, gender, age);
+                  alert("投稿完了");
+                }}
+              >
+                投稿
+              </Button>
+            </div>
           </div>
-          <Button
-            onClick={() => {
-              console.log(comment, address, gender, age);
-              alert("投稿完了");
-            }}
-          >
-            投稿
-          </Button>
         </div>
       </div>
     </div>
