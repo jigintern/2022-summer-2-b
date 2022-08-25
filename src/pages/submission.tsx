@@ -7,8 +7,8 @@ const SubmissionPage: NextPage = () => {
     <Submission
       address={""}
       comment={""}
-      gender={""}
-      age={""}
+      gender={"女性"}
+      age={"10代"}
       id={0}
       imgURL="/sabae.png"
       like={0}

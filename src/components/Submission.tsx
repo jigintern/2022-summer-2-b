@@ -1,4 +1,4 @@
-import { Select } from "@mantine/core";
+import { Select, Textarea, TextInput } from "@mantine/core";
 import Image from "next/image";
 import { useState } from "react";
 // import Loader from "react-loader-spinner";
@@ -21,6 +21,11 @@ const Submission: React.FC<SubmissionProps> = (props) => {
     { value: "70", label: "70代以上" },
   ]);
 
+  const [comment, setComment] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+
   return (
     <div
       style={{
@@ -38,45 +43,29 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           width={600}
           height={600}
           objectFit="contain"
+          style={{ borderRadius: "16px" }}
         />
       )}
       <div style={{ width: "520px" }}>
-        <textarea
+        <Textarea
           placeholder="コメントを入力"
-          value={props.comment}
-          style={{
-            height: "240px",
-            padding: "52px",
-            border: "1px solid #ABABAB",
-            borderRadius: "8px",
-            width: "416px",
+          radius="md"
+          minRows={14}
+          maxRows={14}
+          onChange={(e) => {
+            setComment(e.target.value);
           }}
         />
-        <form
+        <TextInput
+          placeholder="住所を入力"
+          radius="md"
           style={{
-            boxSizing: "border-box",
-            marginTop: "40px",
+            padding: "40px 0 0 0",
           }}
-        >
-          <input
-            type="text"
-            name="keyword"
-            placeholder="住所を入力"
-            value={props.address}
-            autoFocus
-            style={{
-              display: "block",
-              padding: "8px 20px",
-              fontSize: "16px",
-              fontWeight: "300",
-              outline: "none",
-              border: "1px solid ABABAB",
-              background: "white",
-              borderRadius: "8px",
-              width: "480px",
-            }}
-          />
-        </form>
+          onChange={(e) => {
+            setAddress(e.target.value);
+          }}
+        />
         <div
           style={{
             display: " flex",
@@ -92,6 +81,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               data={genderData}
               placeholder="選択してください"
               nothingFound="Nothing found"
+              radius="md"
               searchable
               creatable
               getCreateLabel={(query) => `+ Create ${query}`}
@@ -101,7 +91,9 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
                 return item;
               }}
-              value={props.gender}
+              onChange={(e) => {
+                setGender(e ?? "");
+              }}
               style={{ width: "200px", marginTop: "32px" }}
             />
             <Select
@@ -109,6 +101,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               data={ageData}
               placeholder="選択してください"
               nothingFound="Nothing found"
+              radius="md"
               searchable
               creatable
               getCreateLabel={(query) => `+ Create ${query}`}
@@ -118,11 +111,20 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
                 return item;
               }}
-              value={props.age}
+              onChange={(e) => {
+                setAge(e ?? "");
+              }}
               style={{ width: "200px", marginTop: "32px" }}
             />
           </div>
-          <Button>投稿</Button>
+          <Button
+            onClick={() => {
+              console.log(comment, address, gender, age);
+              alert("投稿完了");
+            }}
+          >
+            投稿
+          </Button>
         </div>
       </div>
     </div>

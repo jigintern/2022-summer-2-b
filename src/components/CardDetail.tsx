@@ -1,29 +1,16 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
-
-function chanege(i: number, n: number) {
-  if (i == n) {
-    return (i = 0);
-  }
-
-  return i + 1;
-}
-function back(i: number, n: number) {
-  if ((i = 0)) {
-    return (i = n);
-  }
-
-  return i - 1;
-}
+import { useRecoilValue } from "recoil";
+import { Button } from "src/components/Button";
+import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
+import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
 export const CardDetail = () => {
-  let person = ["女性 10代", "男性 10代"];
-  let place = ["福井県鯖江市新横江２丁目３−４", "東京"];
-  let comment = ["人形供養とかじゃないでめがね供養があった", "いいね"];
-  let img = ["/sabae.png", "/sabae.png"];
-  let i: number = 0;
-  const n: number = 2;
+  const cardDetails = useRecoilValue(cardDetailsState);
+  const selectedCardId = useRecoilValue(selectedCardIdState);
+  const router = useRouter();
 
   return (
     <div
@@ -45,24 +32,13 @@ export const CardDetail = () => {
           width: "100%",
         }}
       >
-        <button
-          onClick={() => {
-            chanege(i, n);
-          }}
-        >
-          <AiFillCaretLeft
-            style={{
-              fontSize: "4rem",
-            }}
-          />
-        </button>
-        {/*<AiFillCaretLeft
+        <AiFillCaretLeft
           style={{
             fontSize: "4rem",
           }}
-        />*/}
+        />
         <Image
-          src={img[i]}
+          src="/sabae.png"
           height="440px"
           width="440px"
           alt="sabae"
@@ -70,22 +46,11 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <button
-          onClick={() => {
-            back(i, n);
-          }}
-        >
-          <AiFillCaretRight
-            style={{
-              fontSize: "4rem",
-            }}
-          />
-        </button>
-        {/*<AiFillCaretRight
+        <AiFillCaretRight
           style={{
             fontSize: "4rem",
           }}
-        />*/}
+        />
       </div>
       <div
         style={{
@@ -96,8 +61,11 @@ export const CardDetail = () => {
           gap: "5.5rem",
         }}
       >
-        {person[i]} <br />
-        {place[i]}
+        {`${cardDetails[selectedCardId - 1]?.reviews[0]?.gender} ${
+          cardDetails[selectedCardId - 1]?.reviews[0]?.age
+        }`}
+        <br />
+        福井県鯖江市新横江２丁目３−４
         <div />
         <div>
           <AiFillHeart />
@@ -107,7 +75,7 @@ export const CardDetail = () => {
               marginLeft: "0.3rem",
             }}
           >
-            100
+            {cardDetails[selectedCardId - 1]?.like}
           </div>
         </div>
       </div>
@@ -117,8 +85,15 @@ export const CardDetail = () => {
           marginRight: "10rem",
         }}
       >
-        {comment[i]}
+        {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
       </div>
+      <Button
+        onClick={() => {
+          router.push("/submission");
+        }}
+      >
+        投稿を追加
+      </Button>
     </div>
   );
 };

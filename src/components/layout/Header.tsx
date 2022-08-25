@@ -24,13 +24,13 @@ const Header = () => {
             display: "inline-flex",
           }}
         >
-          タイトル
+          Insto Atlas
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ paddingRight: "40px" }}>
             <SearchBar />
           </div>
-          <Button>投稿</Button>
+          <Button>新規投稿</Button>
         </div>
       </div>
     </header>
