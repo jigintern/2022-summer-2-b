@@ -101,7 +101,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               }}
             />
             <Select
-              label="年齢"
+              label="性別"
               data={genderData}
               placeholder="選択してください"
               nothingFound="Nothing found"
@@ -133,7 +133,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
               }}
             >
               <Select
-                label="性別"
+                label="年齢"
                 data={ageData}
                 placeholder="選択してください"
                 nothingFound="Nothing found"
