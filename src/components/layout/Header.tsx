@@ -1,7 +1,10 @@
+import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import SearchBar from "src/components/SeachBar";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <header
       style={{
@@ -30,7 +33,13 @@ const Header = () => {
           <div style={{ paddingRight: "40px" }}>
             <SearchBar />
           </div>
-          <Button>新規投稿</Button>
+          <Button
+            onClick={() => {
+              router.push("/submission");
+            }}
+          >
+            新規投稿
+          </Button>
         </div>
       </div>
     </header>
