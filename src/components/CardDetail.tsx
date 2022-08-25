@@ -14,6 +14,11 @@ export const CardDetail = () => {
   const cardDetails = useRecoilValue(cardDetailsState);
   const selectedCardId = useRecoilValue(selectedCardIdState);
   const router = useRouter();
+  let reviewspage = 0;
+
+  function buttoncount() {
+    return reviewspage + 1;
+  }
 
   const [posts, setPosts] = useState([]);
 
@@ -44,13 +49,16 @@ export const CardDetail = () => {
           width: "100%",
         }}
       >
-        <AiFillCaretLeft
-          style={{
-            fontSize: "4rem",
-          }}
-        />
+        <button onClick={buttoncount}>
+          <AiFillCaretLeft
+            style={{
+              fontSize: "4rem",
+            }}
+          />
+        </button>
+
         <Image
-          src="/sabae.png"
+          src={cardDetails[selectedCardId - 1]?.imgURL}
           height="440px"
           width="440px"
           alt="sabae"
@@ -58,11 +66,13 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <AiFillCaretRight
-          style={{
-            fontSize: "4rem",
-          }}
-        />
+        <button onClick={buttoncount}>
+          <AiFillCaretRight
+            style={{
+              fontSize: "4rem",
+            }}
+          />
+        </button>
       </div>
       <div
         style={{
@@ -73,11 +83,11 @@ export const CardDetail = () => {
           gap: "5.5rem",
         }}
       >
-        {`${cardDetails[selectedCardId - 1]?.reviews[0]?.gender} ${
-          cardDetails[selectedCardId - 1]?.reviews[0]?.age
+        {`${cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.gender} ${
+          cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.age
         }`}
         <br />
-        福井県鯖江市新横江２丁目３−４
+        {cardDetails[selectedCardId - 1]?.address}
         <div />
         <div>
           <AiFillHeart />
@@ -97,7 +107,7 @@ export const CardDetail = () => {
           marginRight: "10rem",
         }}
       >
-        {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
+        {cardDetails[selectedCardId - 1]?.reviews[reviewspage]?.comment}
       </div>
       <Button
         onClick={() => {
