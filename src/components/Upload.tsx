@@ -107,7 +107,7 @@ const Upload: React.FC = () => {
 
   return (
     <div>
-      <div style={{ width: "560px", height: "560px" }}>
+      <div style={{ width: "480px", height: "480px" }}>
         {previews.length > 0 ? (
           <Dropzone
             accept={IMAGE_MIME_TYPE}
@@ -128,7 +128,7 @@ const Upload: React.FC = () => {
           <Dropzone
             accept={IMAGE_MIME_TYPE}
             onDrop={setFiles}
-            style={{ width: "560px", height: "560px" }}
+            style={{ width: "480px", height: "480px" }}
           >
             <Text align="center">Drop images here</Text>
           </Dropzone>
