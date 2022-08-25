@@ -30,7 +30,7 @@ const Header = () => {
           <div style={{ paddingRight: "40px" }}>
             <SearchBar />
           </div>
-          <Button>投稿</Button>
+          <Button>新規投稿</Button>
         </div>
       </div>
     </header>
