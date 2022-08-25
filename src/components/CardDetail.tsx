@@ -2,6 +2,7 @@ import Image from "next/image";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
+import { Button } from "src/components/Button";
 import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
@@ -84,6 +85,7 @@ export const CardDetail = () => {
       >
         {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
       </div>
+      <Button>投稿を追加</Button>
     </div>
   );
 };
