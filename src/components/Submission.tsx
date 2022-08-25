@@ -1,5 +1,6 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
 
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -36,37 +37,38 @@ const Submission: React.FC<SubmissionProps> = () => {
 
   const submit = async () => {
     const imgURL = await handleUpload(files);
-    const cards = await db.collection("cards").doc("test_cards");
 
-    cards
-      .set({
-        cards: [
-          {
-            id: 1,
-            latitude: 35.94349566577982,
-            longitude: 136.1886840250416,
-            likes: 200,
-            address: "鯖江市鯖江町1-1-1",
-            reviews: [
-              {
-                id: 1,
-                age: age,
-                comment: comment,
-                gender: gender,
-                imgURL: imgURL,
-              },
-            ],
-          },
-        ],
-      })
-      .then(() => {
-        console.log("Document successfully written!");
-        router.push("/");
-        alert("投稿完了");
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
+    // const cards = doc(db, "cards", "test_cards");
+
+    // cards
+    //   .set({
+    //     cards: [
+    //       {
+    //         id: 1,
+    //         latitude: 35.94349566577982,
+    //         longitude: 136.1886840250416,
+    //         likes: 200,
+    //         address: "鯖江市鯖江町1-1-1",
+    //         reviews: [
+    //           {
+    //             id: 1,
+    //             age: age,
+    //             comment: comment,
+    //             gender: gender,
+    //             imgURL: imgURL,
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   })
+    //   .then(() => {
+    //     console.log("Document successfully written!");
+    //     router.push("/");
+    //     alert("投稿完了");
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error writing document: ", error);
+    //   });
 
     // if (comment != "" && address != "" && gender != "" && age != "") {
     //   console.log(files, comment, address, gender, age);

@@ -1,35 +1,34 @@
 import { Text, Image, SimpleGrid, BackgroundImage } from "@mantine/core";
 import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
-import React, {
-  useState,
-  useCallback,
-  useContext,
-  SetStateAction,
-  Dispatch,
-} from "react";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  TaskState,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
+import React, { SetStateAction, Dispatch } from "react";
 
 import { useDropzone } from "react-dropzone";
-import firebase, { storage } from "src/firebase/firebase";
 
 export type firebaseOnLoadProp = {
   bytesTransferred: number; //転送済みのバイト数の合計
   totalBytes: number; //アップロードされる予定のファイルのバイト数の合計
-  state: firebase.storage.TaskState; //アップロードの現在の状態
+  state: TaskState; //アップロードの現在の状態
   // このほかにもmetadata,task,refがある
 };
 
 export const handleUpload = async (accepterdImg: any) => {
   //ボタンを押すと発火
   try {
+    const storage = getStorage();
     // アップロード処理
-    const uploadTask = storage
-      .ref(`/images/${accepterdImg[0].name}`)
-      .put(accepterdImg[0]);
-    //async awaitで非同期処理を行う
-    const ImgURL: Promise<string> =
-      await uploadTask.snapshot.ref.getDownloadURL();
-    // アップロード化完了したら、画像のURLを返す
+    const storageRef = ref(storage, `/images/${accepterdImg[0].name}`);
+    const uploadTask = uploadBytesResumable(storageRef, accepterdImg[0]);
+    const ImgURL = await getDownloadURL((await uploadTask).ref);
 
+    // アップロード化完了したら、画像のURLを返す
     return ImgURL;
   } catch (error) {
     console.log("エラーキャッチ", error);
