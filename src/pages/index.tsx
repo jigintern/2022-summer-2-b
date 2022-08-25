@@ -17,14 +17,6 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const docRef = db.collection("cards").doc("cards");
-    console.log(process.env.NEXT_PUBLIC_API_URL);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_APP_ID);
-    console.log(process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID);
 
     docRef
       .get()
