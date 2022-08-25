@@ -2,11 +2,11 @@ import Image from "next/image";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { cardDetailState } from "src/globalStates/atoms/cardDetailAtom";
+import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
 export const CardDetail = () => {
-  const cardDetails = useRecoilValue(cardDetailState);
+  const cardDetails = useRecoilValue(cardDetailsState);
   const selectedCardId = useRecoilValue(selectedCardIdState);
 
   return (

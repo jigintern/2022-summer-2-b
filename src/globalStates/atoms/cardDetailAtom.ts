@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { CardDetailProps } from "src/types/cardDetail";
 
-export const cardDetailState = atom<CardDetailProps[]>({
+export const cardDetailsState = atom<CardDetailProps[]>({
   key: "cardDetail",
   default: [
     {

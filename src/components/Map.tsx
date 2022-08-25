@@ -7,7 +7,7 @@ import Image from "next/image";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useRecoilState } from "recoil";
 import { Card } from "src/components/Card";
-import { cardDetailState } from "src/globalStates/atoms/cardDetailAtom";
+import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
 });
 
 const Map = () => {
-  const [cardDetails] = useRecoilState(cardDetailState);
+  const [cardDetails] = useRecoilState(cardDetailsState);
 
   return (
     <MapContainer
