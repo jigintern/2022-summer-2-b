@@ -30,6 +30,16 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
   const router = useRouter();
 
+  const submit = () => {
+    if (comment != "" && address != "" && gender != "" && age != "") {
+      console.log(comment, address, gender, age);
+      router.push("/");
+      alert("投稿完了");
+    } else {
+      alert("入力漏れがあります");
+    }
+  };
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div style={{ width: "72vw" }}>
@@ -153,14 +163,7 @@ const Submission: React.FC<SubmissionProps> = (props) => {
                   width: "200px",
                 }}
               />
-              <Button
-                onClick={() => {
-                  console.log(comment, address, gender, age);
-                  alert("投稿完了");
-                }}
-              >
-                投稿
-              </Button>
+              <Button onClick={submit}>投稿</Button>
             </div>
           </div>
         </div>
