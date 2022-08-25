@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 // import Loader from "react-loader-spinner";
 import { Button } from "src/components/Button";
-import db from "src/firebase/firebase";
-import storage from "src/firebase/firebase";
+import db from "src/firebase/firebasedb";
+import storage from "src/firebase/firebasedb";
 import { SubmissionProps } from "src/types/submission";
 
 function Adddoc(comment: string, address: string, gender: string, age: string) {
