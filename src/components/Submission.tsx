@@ -21,6 +21,11 @@ const Submission: React.FC<SubmissionProps> = (props) => {
     { value: "70", label: "70代以上" },
   ]);
 
+  const [comment, setComment] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+
   return (
     <div
       style={{
@@ -47,12 +52,18 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           radius="md"
           minRows={14}
           maxRows={14}
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
         />
         <TextInput
           placeholder="住所を入力"
           radius="md"
           style={{
             padding: "40px 0 0 0",
+          }}
+          onChange={(e) => {
+            setAddress(e.target.value);
           }}
         />
         <div
@@ -80,7 +91,9 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
                 return item;
               }}
-              value={props.gender}
+              onChange={(e) => {
+                setGender(e ?? "");
+              }}
               style={{ width: "200px", marginTop: "32px" }}
             />
             <Select
@@ -98,11 +111,20 @@ const Submission: React.FC<SubmissionProps> = (props) => {
 
                 return item;
               }}
-              value={props.age}
+              onChange={(e) => {
+                setAge(e ?? "");
+              }}
               style={{ width: "200px", marginTop: "32px" }}
             />
           </div>
-          <Button>投稿</Button>
+          <Button
+            onClick={() => {
+              console.log(comment, address, gender, age);
+              alert("投稿完了");
+            }}
+          >
+            投稿
+          </Button>
         </div>
       </div>
     </div>
