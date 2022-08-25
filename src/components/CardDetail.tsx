@@ -18,7 +18,7 @@ export const CardDetail = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const postData = collection(db, "post");
+    const postData = collection(db, "card");
     getDocs(postData).then((snapShot) => {
       //setPosts(snapShot.docs.map((doc) => ({ ...doc.data() })));
     });

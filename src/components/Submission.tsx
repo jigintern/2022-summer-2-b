@@ -1,15 +1,16 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
 import { collection, addDoc } from "firebase/firestore";
+import { ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 // import Loader from "react-loader-spinner";
 import { Button } from "src/components/Button";
+import storage from "src/firebase/firebase";
 import db from "src/firebase/firebasedb";
-import storage from "src/firebase/firebasedb";
 import { SubmissionProps } from "src/types/submission";
 
 function Adddoc(comment: string, address: string, gender: string, age: string) {
-  const docref = addDoc(collection(db, "post"), {
+  addDoc(collection(db, "post"), {
     comment: { comment },
     address: { address },
     gender: { gender },
