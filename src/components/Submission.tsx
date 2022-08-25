@@ -1,5 +1,6 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
@@ -27,6 +28,8 @@ const Submission: React.FC<SubmissionProps> = (props) => {
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
 
+  const router = useRouter();
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div style={{ width: "72vw" }}>
@@ -41,6 +44,9 @@ const Submission: React.FC<SubmissionProps> = (props) => {
           <AiOutlineLeft
             style={{
               fontSize: "1rem",
+            }}
+            onClick={() => {
+              router.push("/");
             }}
           />
           <p style={{ color: "#767676" }}>投稿作成</p>
