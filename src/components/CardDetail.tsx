@@ -15,12 +15,7 @@ export const CardDetail = () => {
   const selectedCardId = useRecoilValue(selectedCardIdState);
   const router = useRouter();
 
-  const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(0);
-
-  const handleClick = () => {
-    setCount(count + 1);
-  };
 
   useEffect(() => {
     if (count == cardDetails[selectedCardId - 1]?.reviews.length) {
@@ -32,13 +27,6 @@ export const CardDetail = () => {
     }
     console.log(`count が更新されました。count=${count}`);
   }, [count]);
-
-  useEffect(() => {
-    const postData = collection(db, "card");
-    getDocs(postData).then((snapShot) => {
-      //setPosts(snapShot.docs.map((doc) => ({ ...doc.data() })));
-    });
-  }, []);
 
   return (
     <div
@@ -81,7 +69,12 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <button onClick={handleClick}>
+        <button
+          id="right"
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
           <AiFillCaretRight
             style={{
               fontSize: "4rem",
