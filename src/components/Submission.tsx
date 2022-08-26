@@ -2,7 +2,7 @@ import { Select, Textarea, TextInput } from "@mantine/core";
 import { AxiosResponse } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ReactChild, ReactFragment, ReactPortal, useState } from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
@@ -34,6 +34,8 @@ const Submission: React.FC<SubmissionProps> = () => {
   // @ts-ignore
   const [GeoJSON, setGeoJSON] =
     useState<Promise<AxiosResponse<any, any> | undefined>>();
+  const [addressOptions, setAddressOptions] =
+    useState<Promise<string[] | undefined>>();
 
   const router = useRouter();
 
@@ -51,12 +53,26 @@ const Submission: React.FC<SubmissionProps> = () => {
     console.log(word);
     setGeoJSON(geocodingAPI(word));
     let json = await GeoJSON;
+    let addressOptions: string[] = [];
     if (json?.data.length != 0) {
-      console.log(json?.data[0].properties.title);
-    }
+      json?.data.map((data: { properties: { title: string } }) => {
+        addressOptions.push(data.properties.title);
+      });
+      console.log("changeAddress");
+      console.log(addressOptions);
 
-    // console.log(geometry);
+      return addressOptions;
+    }
   };
+
+  // const addOptions = async () => {
+  //   let options = await addressOptions;
+  //   options?.map((option: string, index: number) => {
+  //     console.log(option);
+
+  //     return <div key={index}>{option}</div>;
+  //   });
+  // };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -119,11 +135,13 @@ const Submission: React.FC<SubmissionProps> = () => {
             <TextInput
               placeholder="住所を入力"
               radius="md"
-              onChange={(e) => {
+              onChange={async (e) => {
                 setAddress(e.target.value);
-                changeAddress(e.target.value);
+                // changeAddress(e.target.value);
+                setAddressOptions(changeAddress(e.target.value));
               }}
             />
+            {/* {addOptions} */}
             <Select
               label="性別"
               data={genderData}
