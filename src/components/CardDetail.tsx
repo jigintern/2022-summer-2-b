@@ -6,7 +6,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { Snapshot, useRecoilValue } from "recoil";
 import { Button } from "src/components/Button";
-import db from "src/firebase/firebasedb";
+import { db } from "src/firebase/firebase";
 import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 import { selectedCardIdState } from "src/globalStates/atoms/selectedCardIdState";
 
