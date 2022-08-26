@@ -3,12 +3,19 @@ import { Select, Textarea, TextInput } from "@mantine/core";
 import { AxiosResponse } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ReactChild, ReactFragment, ReactPortal, useState } from "react";
+import {
+  ReactChild,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import Upload from "src/components/Upload";
 import { handleUpload } from "src/components/Upload";
+import { useDebounce } from "src/hooks/useDebounce";
 import { geocodingAPI } from "src/lib/geocodingAPI";
 import { SubmissionProps } from "src/types/submission";
 
@@ -51,6 +58,7 @@ const Submission: React.FC<SubmissionProps> = () => {
       alert("入力漏れがあります");
     }
   };
+
   const changeAddress = async (text: string) => {
     console.log(text);
     setGeoJSON(geocodingAPI(text));
@@ -70,6 +78,13 @@ const Submission: React.FC<SubmissionProps> = () => {
       setText(text);
     }
   };
+
+  const debounceAddress = useDebounce({ value: address, delay: 1000 });
+  useEffect(() => {
+    if (debounceAddress) {
+      changeAddress(address);
+    }
+  }, [debounceAddress]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -142,7 +157,6 @@ const Submission: React.FC<SubmissionProps> = () => {
               radius="md"
               onChange={async (e) => {
                 setAddress(e.target.value);
-                changeAddress(e.target.value);
               }}
             />
             {isFocus && (
