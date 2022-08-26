@@ -42,7 +42,13 @@ const Submission: React.FC<SubmissionProps> = () => {
   const router = useRouter();
 
   const submit = () => {
-    if (comment != "" && address != "" && gender != "" && age != "") {
+    if (
+      files != undefined &&
+      comment != "" &&
+      address != "" &&
+      gender != "" &&
+      age != ""
+    ) {
       console.log(files, comment, address, gender, age);
       handleUpload(files);
       router.push("/");
@@ -163,6 +169,7 @@ const Submission: React.FC<SubmissionProps> = () => {
                     p="8px 8px"
                     onClick={async () => {
                       await setText(addressOption);
+                      await setAddress(addressOption);
                       await setIsFocus(false);
                     }}
                   >
