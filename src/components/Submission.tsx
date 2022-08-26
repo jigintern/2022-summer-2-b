@@ -39,9 +39,6 @@ const Submission: React.FC<SubmissionProps> = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-  // @ts-ignore
-  const [GeoJSON, setGeoJSON] =
-    useState<Promise<AxiosResponse<any, any> | undefined>>();
   const [addressOptions, setAddressOptions] = useState<string[]>();
   const [text, setText] = useState("");
   const [isFocus, setIsFocus] = useState(false);
@@ -67,8 +64,7 @@ const Submission: React.FC<SubmissionProps> = () => {
 
   const changeAddress = async (text: string) => {
     console.log(text);
-    setGeoJSON(geocodingAPI(text));
-    let json = await GeoJSON;
+    let json = await geocodingAPI(text);
     let addressOptions: string[] = [];
     let cnt = 0;
     if (json?.data.length != 0) {
