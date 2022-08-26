@@ -81,7 +81,6 @@ const Submission: React.FC<SubmissionProps> = () => {
       console.log("changeAddress");
       console.log(addressOptions);
       setAddressOptions(addressOptions);
-      setText(text);
     }
   };
 
@@ -163,6 +162,7 @@ const Submission: React.FC<SubmissionProps> = () => {
               radius="md"
               onChange={async (e) => {
                 setAddress(e.target.value);
+                setText(e.target.value);
               }}
             />
             {isFocus && (
