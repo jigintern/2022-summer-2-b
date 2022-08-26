@@ -65,7 +65,7 @@ const Submission: React.FC<SubmissionProps> = () => {
             id: cardId,
             latitude: geoPoint.latitude,
             longitude: geoPoint.longitude,
-            likes: 0,
+            like: 0,
             address: address,
             reviews: [
               {
