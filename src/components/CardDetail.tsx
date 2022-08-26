@@ -72,7 +72,7 @@ export const CardDetail = () => {
           <div
             style={{
               float: "right",
-              marginLeft: "0.3rem",
+              marginLeft: "0.25rem",
             }}
           >
             {cardDetails[selectedCardId - 1]?.like}
@@ -82,7 +82,7 @@ export const CardDetail = () => {
       <div
         style={{
           fontSize: "0.8rem",
-          marginRight: "10rem",
+          marginRight: "11.5rem",
         }}
       >
         {cardDetails[selectedCardId - 1]?.reviews[0]?.comment}
