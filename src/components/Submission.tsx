@@ -1,6 +1,15 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
 
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+  getDoc,
+  runTransaction,
+} from "firebase/firestore";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -29,61 +38,72 @@ const Submission: React.FC<SubmissionProps> = () => {
   ]);
   const [files, setFiles] = useState<File[]>([]);
   const [comment, setComment] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState("鯖江市鯖江町1-1-1");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [geoPoint, setGeoPoint] = useState({
+    latitude: 35.942916645564445,
+    longitude: 136.19877108514828,
+  });
 
   const router = useRouter();
 
   const submit = async () => {
     const imgURL = await handleUpload(files);
+    const cardsRef = doc(db, "cards", "test_cards");
 
-    // const cards = doc(db, "cards", "test_cards");
-
-    // cards
-    //   .set({
-    //     cards: [
-    //       {
-    //         id: 1,
-    //         latitude: 35.94349566577982,
-    //         longitude: 136.1886840250416,
-    //         likes: 200,
-    //         address: "鯖江市鯖江町1-1-1",
-    //         reviews: [
-    //           {
-    //             id: 1,
-    //             age: age,
-    //             comment: comment,
-    //             gender: gender,
-    //             imgURL: imgURL,
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   })
-    //   .then(() => {
-    //     console.log("Document successfully written!");
-    //     router.push("/");
-    //     alert("投稿完了");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error writing document: ", error);
-    //   });
+    try {
+      await runTransaction(db, async (transaction) => {
+        const docSnap = await transaction.get(cardsRef);
+        if (!docSnap.exists()) {
+          throw "Document does not exist!";
+        }
+        //cardId
+        const cardId = docSnap.data().cards.length + 1;
+        transaction.update(cardsRef, {
+          cards: arrayUnion({
+            id: cardId,
+            latitude: geoPoint.latitude,
+            longitude: geoPoint.longitude,
+            likes: 0,
+            address: address,
+            reviews: [
+              {
+                id: 1,
+                age: age,
+                comment: comment,
+                gender: gender,
+                imgURL: imgURL,
+              },
+            ],
+          }),
+        });
+      });
+      console.log("Transaction successfully committed!");
+      router.push("/");
+      alert("投稿完了");
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+    }
 
     // if (comment != "" && address != "" && gender != "" && age != "") {
     //   console.log(files, comment, address, gender, age);
     //   const imgURL = await handleUpload(files);
-    //   const cards = await db.collection("cards").doc("test_cards");
 
-    //   cards
-    //     .set({
-    //       cards: [
-    //         {
-    //           id: 1,
-    //           latitude: 35.94349566577982,
-    //           longitude: 136.1886840250416,
-    //           likes: 200,
-    //           address: "鯖江市鯖江町1-1-1",
+    //   try {
+    //     await runTransaction(db, async (transaction) => {
+    //       const docSnap = await transaction.get(cardsRef);
+    //       if (!docSnap.exists()) {
+    //         throw "Document does not exist!";
+    //       }
+    //       const cardId = docSnap.data().cards.length + 1;
+    //       transaction.update(cardsRef, {
+    //         cards: arrayUnion({
+    //           id: cardId,
+    //           latitude: geoPoint.latitude,
+    //           longitude: geoPoint.longitude,
+    //           likes: 0,
+    //           address: address,
     //           reviews: [
     //             {
     //               id: 1,
@@ -93,17 +113,15 @@ const Submission: React.FC<SubmissionProps> = () => {
     //               imgURL: imgURL,
     //             },
     //           ],
-    //         },
-    //       ],
-    //     })
-    //     .then(() => {
-    //       console.log("Document successfully written!");
-    //       router.push("/");
-    //       alert("投稿完了");
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error writing document: ", error);
+    //         }),
+    //       });
     //     });
+    //     console.log("Transaction successfully committed!");
+    //     router.push("/");
+    //     alert("投稿完了");
+    //   } catch (e) {
+    //     console.log("Transaction failed: ", e);
+    //   }
     // } else {
     //   alert("入力漏れがあります");
     // }
