@@ -35,7 +35,7 @@ export const Card: FC<CardPopUpProps> = (props) => {
           setSelectedCardId(id);
         }}
       >
-        <Image src={imgURL} alt={"gazou"} width={300} height={200} />
+        <Image src={imgURL} alt={"gazou"} width={300} height={300} />
       </button>
       <div
         style={{
