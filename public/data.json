@@ -15,10 +15,10 @@
       },
       {
         "id": 2,
-        "comment": "人形供養とかじゃないでめがね供養があった",
+        "comment": "西山公園は高かった",
         "imgURL": "/sabae.png",
-        "age": "20代",
-        "gender": "女性"
+        "age": "10代",
+        "gender": "男性"
       }
     ]
   },
@@ -27,13 +27,13 @@
     "like": 300,
     "latitude": 35.942916645564445,
     "longitude": 136.19877108514828,
-    "address": "鯖江市鯖江町1-1-1",
+    "address": "鯖江市鯖江町1-1-2",
     "reviews": [
       {
         "id": 1,
         "comment": "人形供養とかじゃないでめがね供養があった",
-        "imgURL": "/sabae.png",
-        "age": "20代",
+        "imgURL": "/mori.jpg",
+        "age": "30代",
         "gender": "女性"
       }
     ]
