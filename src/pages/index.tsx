@@ -1,10 +1,13 @@
 import { Modal } from "@mantine/core";
 import axios, { AxiosResponse } from "axios";
+
+import { doc, getDoc } from "firebase/firestore";
 import type { NextPage } from "next";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { CardDetail } from "src/components/CardDetail";
+import { db } from "src/firebase/firebase";
 import { isModalState } from "src/globalStates/atoms/IsModalAtom";
 import { cardDetailsState } from "src/globalStates/atoms/cardDetailAtom";
 import { CardDetailProps } from "src/types/cardDetail";
@@ -14,17 +17,17 @@ const Home: NextPage = () => {
   const [cardDetails, setCardDetails] = useRecoilState(cardDetailsState);
 
   useEffect(() => {
-    const fetchAndSetCardData = async () => {
-      try {
-        const res: AxiosResponse<CardDetailProps[]> = await axios.get(
-          "/data.json"
-        );
-        setCardDetails(res.data);
-      } catch (error) {
-        console.log(error);
+    // const docRef = db.collection("cards").doc("test_cards");
+    const docRef = doc(db, "cards", "test_cards");
+    getDoc(docRef).then((docSnap) => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data()?.cards);
+        setCardDetails(docSnap.data()?.cards);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
       }
-    };
-    fetchAndSetCardData();
+    });
   }, []);
 
   const Map = React.useMemo(

@@ -61,7 +61,7 @@ export const CardDetail = () => {
         </button>
 
         <Image
-          src={cardDetails[selectedCardId - 1]?.imgURL}
+          src={cardDetails[selectedCardId - 1]?.reviews[0]?.imgURL}
           height="440px"
           width="440px"
           alt="sabae"
