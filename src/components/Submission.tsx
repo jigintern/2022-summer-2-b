@@ -1,5 +1,6 @@
+import { Box, Text } from "@chakra-ui/react";
 import { Select, Textarea, TextInput } from "@mantine/core";
-
+import { AxiosResponse } from "axios";
 import {
   doc,
   updateDoc,
@@ -9,16 +10,23 @@ import {
   getDoc,
   runTransaction,
 } from "firebase/firestore";
-
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import {
+  ReactChild,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 // import Loader from "react-loader-spinner";
 import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import Upload from "src/components/Upload";
 import { handleUpload } from "src/components/Upload";
 import { db } from "src/firebase/firebase";
+import { useDebounce } from "src/hooks/useDebounce";
+import { geocodingAPI } from "src/lib/geocodingAPI";
 import { SubmissionProps } from "src/types/submission";
 
 const Submission: React.FC<SubmissionProps> = () => {
@@ -41,6 +49,10 @@ const Submission: React.FC<SubmissionProps> = () => {
   const [address, setAddress] = useState("鯖江市鯖江町1-1-1");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [addressOptions, setAddressOptions] = useState<string[]>();
+  const [text, setText] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
+
   const [geoPoint, setGeoPoint] = useState({
     latitude: 35.942916645564445,
     longitude: 136.19877108514828,
@@ -51,81 +63,77 @@ const Submission: React.FC<SubmissionProps> = () => {
   const submit = async () => {
     const imgURL = await handleUpload(files);
     const cardsRef = doc(db, "cards", "test_cards");
+    if (
+      files != undefined &&
+      comment != "" &&
+      address != "" &&
+      gender != "" &&
+      age != ""
+    ) {
+      console.log(files, comment, address, gender, age);
+      const imgURL = await handleUpload(files);
 
-    try {
-      await runTransaction(db, async (transaction) => {
-        const docSnap = await transaction.get(cardsRef);
-        if (!docSnap.exists()) {
-          throw "Document does not exist!";
-        }
-        //cardId
-        const cardId = docSnap.data().cards.length + 1;
-        transaction.update(cardsRef, {
-          cards: arrayUnion({
-            id: cardId,
-            latitude: geoPoint.latitude,
-            longitude: geoPoint.longitude,
-            likes: 0,
-            address: address,
-            reviews: [
-              {
-                id: 1,
-                age: age,
-                comment: comment,
-                gender: gender,
-                imgURL: imgURL,
-              },
-            ],
-          }),
+      try {
+        await runTransaction(db, async (transaction) => {
+          const docSnap = await transaction.get(cardsRef);
+          if (!docSnap.exists()) {
+            throw "Document does not exist!";
+          }
+          const cardId = docSnap.data().cards.length + 1;
+          transaction.update(cardsRef, {
+            cards: arrayUnion({
+              id: cardId,
+              latitude: geoPoint.latitude,
+              longitude: geoPoint.longitude,
+              likes: 0,
+              address: address,
+              reviews: [
+                {
+                  id: 1,
+                  age: age,
+                  comment: comment,
+                  gender: gender,
+                  imgURL: imgURL,
+                },
+              ],
+            }),
+          });
         });
-      });
-      console.log("Transaction successfully committed!");
-      router.push("/");
-      alert("投稿完了");
-    } catch (e) {
-      console.log("Transaction failed: ", e);
+        console.log("Transaction successfully committed!");
+        router.push("/");
+        alert("投稿完了");
+      } catch (e) {
+        console.log("Transaction failed: ", e);
+      }
+    } else {
+      alert("入力漏れがあります");
     }
-
-    // if (comment != "" && address != "" && gender != "" && age != "") {
-    //   console.log(files, comment, address, gender, age);
-    //   const imgURL = await handleUpload(files);
-
-    //   try {
-    //     await runTransaction(db, async (transaction) => {
-    //       const docSnap = await transaction.get(cardsRef);
-    //       if (!docSnap.exists()) {
-    //         throw "Document does not exist!";
-    //       }
-    //       const cardId = docSnap.data().cards.length + 1;
-    //       transaction.update(cardsRef, {
-    //         cards: arrayUnion({
-    //           id: cardId,
-    //           latitude: geoPoint.latitude,
-    //           longitude: geoPoint.longitude,
-    //           likes: 0,
-    //           address: address,
-    //           reviews: [
-    //             {
-    //               id: 1,
-    //               age: age,
-    //               comment: comment,
-    //               gender: gender,
-    //               imgURL: imgURL,
-    //             },
-    //           ],
-    //         }),
-    //       });
-    //     });
-    //     console.log("Transaction successfully committed!");
-    //     router.push("/");
-    //     alert("投稿完了");
-    //   } catch (e) {
-    //     console.log("Transaction failed: ", e);
-    //   }
-    // } else {
-    //   alert("入力漏れがあります");
-    // }
   };
+
+  const changeAddress = async (text: string) => {
+    console.log(text);
+    let json = await geocodingAPI(text);
+    let addressOptions: string[] = [];
+    let cnt = 0;
+    if (json?.data.length != 0) {
+      json?.data.map((data: { properties: { title: string } }) => {
+        if (cnt < 5) {
+          addressOptions.push(data.properties.title);
+        }
+        cnt++;
+      });
+      console.log("changeAddress");
+      console.log(addressOptions);
+      setAddressOptions(addressOptions);
+    }
+  };
+
+  const debounceAddress = useDebounce({ value: address, delay: 1000 });
+  useEffect(() => {
+    if (debounceAddress) {
+      changeAddress(address);
+    }
+  }, [debounceAddress]);
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -185,19 +193,50 @@ const Submission: React.FC<SubmissionProps> = () => {
                 setComment(e.target.value);
               }}
             />
-            <Select
-              placeholder="住所を入力"
-              searchable
-              nothingFound="No options"
-              radius="md"
-              style={{
-                padding: "40px 0 0 0",
+            {/* <Box onBlur={() => setIsFocus(false)}> */}
+            <TextInput
+              onFocus={() => setIsFocus(true)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  setIsFocus(false);
+                }
               }}
-              data={[""]}
-              onChange={(e) => {
-                setAddress(e ?? "");
+              value={text}
+              placeholder="住所を入力"
+              radius="md"
+              onChange={async (e) => {
+                setAddress(e.target.value);
+                setText(e.target.value);
               }}
             />
+            {isFocus && (
+              <Box
+                w="100%"
+                h="100%"
+                boxShadow="md"
+                bg="white"
+                mt="8px"
+                borderRadius="lg"
+              >
+                {addressOptions?.map((addressOption, i) => (
+                  <Text
+                    cursor="pointer"
+                    bg="white"
+                    _hover={{ bg: "gray.100" }}
+                    key={i}
+                    p="8px 8px"
+                    onClick={async () => {
+                      await setText(addressOption);
+                      await setAddress(addressOption);
+                      await setIsFocus(false);
+                    }}
+                  >
+                    {addressOption}
+                  </Text>
+                ))}
+              </Box>
+            )}
+            {/* </Box> */}
             <Select
               label="性別"
               data={genderData}
@@ -205,7 +244,6 @@ const Submission: React.FC<SubmissionProps> = () => {
               nothingFound="Nothing found"
               radius="md"
               searchable
-              creatable
               getCreateLabel={(query) => `+ Create ${query}`}
               onCreate={(query) => {
                 const item = { value: query, label: query };
@@ -236,7 +274,6 @@ const Submission: React.FC<SubmissionProps> = () => {
                 nothingFound="Nothing found"
                 radius="md"
                 searchable
-                creatable
                 getCreateLabel={(query) => `+ Create ${query}`}
                 onCreate={(query) => {
                   const item = { value: query, label: query };
