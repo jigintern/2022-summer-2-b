@@ -18,6 +18,21 @@ export const CardDetail = () => {
   const [posts, setPosts] = useState([]);
   const [count, setCount] = useState(0);
 
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  useEffect(() => {
+    if (count == cardDetails[selectedCardId - 1]?.reviews.length) {
+      setCount(cardDetails[selectedCardId - 1]?.reviews.length - 1);
+      console.log(`count が上限です。count=${count}`);
+    } else if (count == -1) {
+      setCount(0);
+      console.log(`count が下限です。count=${count}`);
+    }
+    console.log(`count が更新されました。count=${count}`);
+  }, [count]);
+
   useEffect(() => {
     const postData = collection(db, "card");
     getDocs(postData).then((snapShot) => {
@@ -47,9 +62,6 @@ export const CardDetail = () => {
       >
         <button
           onClick={() => {
-            if (count == 0) {
-              setCount(count);
-            }
             setCount(count - 1);
           }}
         >
@@ -69,18 +81,7 @@ export const CardDetail = () => {
             borderRadius: "20px",
           }}
         />
-        <button
-          onClick={() => {
-            if (
-              count ==
-              cardDetails[selectedCardId - 1]?.reviews[count]?.id -
-                cardDetails[selectedCardId - 1]?.reviews[0]?.id
-            ) {
-              setCount(count);
-            }
-            setCount(count + 1);
-          }}
-        >
+        <button onClick={handleClick}>
           <AiFillCaretRight
             style={{
               fontSize: "4rem",

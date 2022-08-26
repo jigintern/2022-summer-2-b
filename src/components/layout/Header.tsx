@@ -31,9 +31,6 @@ const Header = () => {
           onClick={() => {
             router.push("/");
           }}
-          onClick={() => {
-            router.push("/");
-          }}
         >
           Insto Atlas
         </h1>
