@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "./Button";
 // import "./detail.css";
 
@@ -36,7 +37,13 @@ const Detail = () => {
           width={300}
           height={200}
         />
-        <Button type="button">
+        <Button>
+          <Link to="/App" className="nav-link">
+            App
+          </Link>
+          <Link to="/map-page" className="nav-link">
+            go
+          </Link>
           {/*<Image
             src={`https://i.gyazo.com/15cd08eebb62130043f0181eb02e9c47.png`}
             alt="Logo"
