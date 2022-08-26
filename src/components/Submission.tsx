@@ -1,4 +1,5 @@
 import { Select, Textarea, TextInput } from "@mantine/core";
+import { AxiosResponse } from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { AiOutlineLeft } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import Upload from "src/components/Upload";
 import { handleUpload } from "src/components/Upload";
+import { geocodingAPI } from "src/lib/geocodingAPI";
 import { SubmissionProps } from "src/types/submission";
 
 const Submission: React.FC<SubmissionProps> = () => {
@@ -29,6 +31,8 @@ const Submission: React.FC<SubmissionProps> = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  const [GeoJSON, setGeoJSON] =
+    useState<Promise<AxiosResponse<any, any> | undefined>>();
 
   const router = useRouter();
 
@@ -41,6 +45,14 @@ const Submission: React.FC<SubmissionProps> = () => {
     } else {
       alert("入力漏れがあります");
     }
+  };
+  const changeAddress = async (word: string) => {
+    console.log(word);
+    setGeoJSON(geocodingAPI(word));
+    // let geometry = GeoJSON?.then((data) => data[0].property …)
+    // console.log(geometry);
+    console.log(GeoJSON);
+    // @ts-ignore
   };
 
   return (
@@ -106,6 +118,7 @@ const Submission: React.FC<SubmissionProps> = () => {
               radius="md"
               onChange={(e) => {
                 setAddress(e.target.value);
+                changeAddress(e.target.value);
               }}
             />
             <Select
