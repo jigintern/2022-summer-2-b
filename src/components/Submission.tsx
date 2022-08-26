@@ -50,7 +50,8 @@ const Submission: React.FC<SubmissionProps> = () => {
 
   const submit = async () => {
     const imgURL = await handleUpload(files);
-    const cardsRef = doc(db, "cards", "test_cards");
+    const cardsRef = doc(db, "cards", "test");
+    const reviewRef = doc(db, "cards", "test", "cards", "0");
 
     try {
       await runTransaction(db, async (transaction) => {
@@ -58,26 +59,40 @@ const Submission: React.FC<SubmissionProps> = () => {
         if (!docSnap.exists()) {
           throw "Document does not exist!";
         }
-        //cardId
-        const cardId = docSnap.data().cards.length + 1;
-        transaction.update(cardsRef, {
-          cards: arrayUnion({
-            id: cardId,
-            latitude: geoPoint.latitude,
-            longitude: geoPoint.longitude,
-            like: 0,
-            address: address,
-            reviews: [
-              {
-                id: 1,
-                age: age,
-                comment: comment,
-                gender: gender,
-                imgURL: imgURL,
-              },
-            ],
-          }),
+        //同じ場所の時
+        transaction.update(reviewRef, {
+          reviews: arrayUnion([
+            {
+              id: 1,
+              age: age,
+              comment: comment,
+              gender: gender,
+              imgURL: imgURL,
+            },
+          ]),
         });
+
+        //違う場所だった時
+        // cardId
+        // const cardId = docSnap.data().cards.length + 1;
+        // transaction.update(cardsRef, {
+        //   cards: arrayUnion({
+        //     id: cardId,
+        //     latitude: geoPoint.latitude,
+        //     longitude: geoPoint.longitude,
+        //     like: 0,
+        //     address: address,
+        //     reviews: [
+        //       {
+        //         id: 1,
+        //         age: age,
+        //         comment: comment,
+        //         gender: gender,
+        //         imgURL: imgURL,
+        //       },
+        //     ],
+        //   }),
+        // });
       });
       console.log("Transaction successfully committed!");
       router.push("/");
