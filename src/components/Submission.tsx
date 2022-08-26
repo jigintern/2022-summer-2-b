@@ -1,3 +1,4 @@
+import { Box, Text } from "@chakra-ui/react";
 import { Select, Textarea, TextInput } from "@mantine/core";
 import { AxiosResponse } from "axios";
 import Image from "next/image";
@@ -34,8 +35,9 @@ const Submission: React.FC<SubmissionProps> = () => {
   // @ts-ignore
   const [GeoJSON, setGeoJSON] =
     useState<Promise<AxiosResponse<any, any> | undefined>>();
-  const [addressOptions, setAddressOptions] =
-    useState<Promise<string[] | undefined>>();
+  const [addressOptions, setAddressOptions] = useState<string[]>();
+  const [text, setText] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
 
   const router = useRouter();
 
@@ -49,30 +51,25 @@ const Submission: React.FC<SubmissionProps> = () => {
       alert("入力漏れがあります");
     }
   };
-  const changeAddress = async (word: string) => {
-    console.log(word);
-    setGeoJSON(geocodingAPI(word));
+  const changeAddress = async (text: string) => {
+    console.log(text);
+    setGeoJSON(geocodingAPI(text));
     let json = await GeoJSON;
     let addressOptions: string[] = [];
+    let cnt = 0;
     if (json?.data.length != 0) {
       json?.data.map((data: { properties: { title: string } }) => {
-        addressOptions.push(data.properties.title);
+        if (cnt < 5) {
+          addressOptions.push(data.properties.title);
+        }
+        cnt++;
       });
       console.log("changeAddress");
       console.log(addressOptions);
-
-      return addressOptions;
+      setAddressOptions(addressOptions);
+      setText(text);
     }
   };
-
-  // const addOptions = async () => {
-  //   let options = await addressOptions;
-  //   options?.map((option: string, index: number) => {
-  //     console.log(option);
-
-  //     return <div key={index}>{option}</div>;
-  //   });
-  // };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -132,16 +129,49 @@ const Submission: React.FC<SubmissionProps> = () => {
                 setComment(e.target.value);
               }}
             />
+            {/* <Box onBlur={() => setIsFocus(false)}> */}
             <TextInput
+              onFocus={() => setIsFocus(true)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  setIsFocus(false);
+                }
+              }}
+              value={text}
               placeholder="住所を入力"
               radius="md"
               onChange={async (e) => {
                 setAddress(e.target.value);
-                // changeAddress(e.target.value);
-                setAddressOptions(changeAddress(e.target.value));
+                changeAddress(e.target.value);
               }}
             />
-            {/* {addOptions} */}
+            {isFocus && (
+              <Box
+                w="100%"
+                h="100%"
+                boxShadow="md"
+                bg="white"
+                mt="8px"
+                borderRadius="lg"
+              >
+                {addressOptions?.map((addressOption, i) => (
+                  <Text
+                    cursor="pointer"
+                    bg="white"
+                    _hover={{ bg: "gray.100" }}
+                    key={i}
+                    p="8px 8px"
+                    onClick={async () => {
+                      await setText(addressOption);
+                      await setIsFocus(false);
+                    }}
+                  >
+                    {addressOption}
+                  </Text>
+                ))}
+              </Box>
+            )}
+            {/* </Box> */}
             <Select
               label="性別"
               data={genderData}
