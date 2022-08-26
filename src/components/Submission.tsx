@@ -31,6 +31,7 @@ const Submission: React.FC<SubmissionProps> = () => {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
+  // @ts-ignore
   const [GeoJSON, setGeoJSON] =
     useState<Promise<AxiosResponse<any, any> | undefined>>();
 
@@ -49,10 +50,12 @@ const Submission: React.FC<SubmissionProps> = () => {
   const changeAddress = async (word: string) => {
     console.log(word);
     setGeoJSON(geocodingAPI(word));
-    // let geometry = GeoJSON?.then((data) => data[0].property …)
+    let json = await GeoJSON;
+    if (json?.data.length != 0) {
+      console.log(json?.data[0].properties.title);
+    }
+
     // console.log(geometry);
-    console.log(GeoJSON);
-    // @ts-ignore
   };
 
   return (
