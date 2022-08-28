@@ -21,8 +21,8 @@ yarn install
 ### Firebase アプリ設定
 
 - アプリを追加、ウェブアプリ
-- コンソールで "deno run https://code4fukui.github.io/firebase-util/makeenv.js '" とペースト ([firebase-util](https://github.com/code4fukui/firebase-util)使用)
-- Configをコピー、コンソールで貼り付け、"'"を追加して、エンター
+- コンソールで「deno run https://code4fukui.github.io/firebase-util/makeenv.js '」とペースト ([firebase-util](https://github.com/code4fukui/firebase-util)使用)
+- Firebase アプリからの接続用の Config をコピー、コンソールで貼り付けて、「'」を追加して、エンター
 - 表示された環境設定用のスクリプトを実行（必要に応じて、ファイルにしておく）
 
 ## 起動方法
