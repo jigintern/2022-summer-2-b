@@ -20,6 +20,13 @@ L.Icon.Default.mergeOptions({
 const Map = () => {
   const [cardDetails] = useRecoilState(cardDetailsState);
 
+  const makeIcon = (url: string) => {
+    return new L.Icon({
+      iconUrl: url,
+      iconRetinaUrl: url,
+      iconSize: new L.Point(100, 100),
+    });
+  };
   return (
     <MapContainer
       center={[35.94349566577982, 136.1886840250416]}
@@ -32,9 +39,11 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {cardDetails?.map((cardDetail) => {
+        const icon = makeIcon(cardDetail.reviews?.[0].imgURL);
         return (
           <Marker
             position={[cardDetail.latitude, cardDetail.longitude]}
+            icon={icon}
             key={cardDetail.id}
           >
             <Popup maxWidth={1000}>
