@@ -53,10 +53,12 @@ const Submission: React.FC<SubmissionProps> = () => {
   const [text, setText] = useState("");
   const [isFocus, setIsFocus] = useState(false);
 
+  /*
   const [geoPoint, setGeoPoint] = useState({
     latitude: 35.942916645564445,
     longitude: 136.19877108514828,
   });
+  */
 
   const router = useRouter();
 
@@ -70,10 +72,16 @@ const Submission: React.FC<SubmissionProps> = () => {
       gender != "" &&
       age != ""
     ) {
-      console.log(files, comment, address, gender, age);
-      const imgURL = await handleUpload(files);
 
       try {
+        const json = await geocodingAPI(address);
+        if (json && json.data.length == 0) {
+          throw new Error("緯度経度が取得できませんでした");
+        }
+        const [longitude, latitude] = json.data[0].geometry.coordinates;
+        console.log(files, comment, address, gender, age);
+        const imgURL = await handleUpload(files);
+
         await runTransaction(db, async (transaction) => {
           const docSnap = await transaction.get(cardsRef);
           if (!docSnap.exists()) {
@@ -83,8 +91,8 @@ const Submission: React.FC<SubmissionProps> = () => {
           transaction.update(cardsRef, {
             cards: arrayUnion({
               id: cardId,
-              latitude: geoPoint.latitude,
-              longitude: geoPoint.longitude,
+              latitude,
+              longitude,
               likes: 0,
               address: address,
               reviews: [
@@ -111,6 +119,7 @@ const Submission: React.FC<SubmissionProps> = () => {
   };
 
   const changeAddress = async (text: string) => {
+    /*
     console.log(text);
     let json = await geocodingAPI(text);
     let addressOptions: string[] = [];
@@ -126,6 +135,7 @@ const Submission: React.FC<SubmissionProps> = () => {
       console.log(addressOptions);
       setAddressOptions(addressOptions);
     }
+    */
   };
 
   const debounceAddress = useDebounce({ value: address, delay: 1000 });

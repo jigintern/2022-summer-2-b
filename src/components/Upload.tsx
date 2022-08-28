@@ -1,5 +1,7 @@
 import { Text, Image, SimpleGrid, BackgroundImage } from "@mantine/core";
-import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+//import { Dropzone, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+import { Dropzone } from "@mantine/dropzone";
+const IMAGE_MIME_TYPE = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
 import {
   getStorage,
   ref,
@@ -56,7 +58,6 @@ const Upload: React.FC<{
       />
     );
   });
-
   return (
     <div style={{ width: "480px", height: "480px" }}>
       {previews.length > 0 ? (
